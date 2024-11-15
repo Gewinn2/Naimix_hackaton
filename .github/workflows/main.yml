@@ -1,10 +1,9 @@
-name: deploy-project
+name: deploy-frontend
 
 on:
   push:
     branches:
       - frontend
-      - backend
 
 jobs:
   deploy:
@@ -18,21 +17,13 @@ jobs:
       uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-passphrase: 'penis'
 
-    - name: deploy-frontend
+    - name: restart-compose
       if: github.ref == 'refs/heads/frontend'
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
           cd /root/.hackaton/frontend/hackathon
           git pull origin frontend
-          ./deploy.sh
-        EOF
-
-    - name: deploy-backend
-      if: github.ref == 'refs/heads/backend'
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
-          cd /root/.hackaton/backend
-          git pull origin backend
           ./deploy.sh
         EOF
