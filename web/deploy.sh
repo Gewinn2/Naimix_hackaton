@@ -2,39 +2,26 @@
 
 set -e
 
+APP_NAME="naimix-frontend"
+DOCKERFILE="Dockerfile"
 BUILD_CONTEXT="."
-DOCKERFILE="./Dockerfile"
-IMAGE_NAME="naimix-frontend"
-NEW_TAG=$(date +"%m%d%H%M")
+NEW_TAG=$(date +"%Y%m%d%H%M")
 
-echo "Начало деплоя обновления фронтенда!"
+echo "Начинаю деплой фронтенда!"
 
-echo "Пересборка контейнера..."
-docker build -f $DOCKERFILE -t $IMAGE_NAME:latest $BUILD_CONTEXT
+echo "Сборка Docker-образа..."
+docker build -f $DOCKERFILE -t $APP_NAME:latest $BUILD_CONTEXT
 
-echo "Тегирование: $NEW_TAG..."
-docker tag $IMAGE_NAME:latest $IMAGE_NAME:$NEW_TAG
+echo "Тегирование нового образа: $NEW_TAG..."
+docker tag $APP_NAME:latest $APP_NAME:$NEW_TAG
 
-echo "Остановка текущего контейнера..."
-if docker ps | grep -q $IMAGE_NAME; then
-  docker stop $(docker ps -q --filter ancestor=$IMAGE_NAME:latest)
+echo "Остановка и удаление старого контейнера..."
+if docker ps | grep -q $APP_NAME; then
+  docker stop $APP_NAME || true
+  docker rm $APP_NAME || true
 fi
 
-echo "Удаление старого контейнера..."
-if docker ps -a | grep -q $IMAGE_NAME; then
-  docker rm $(docker ps -a -q --filter ancestor=$IMAGE_NAME:latest)
-fi
+echo "Запуск нового контейнера..."
+docker run -d --name $APP_NAME $APP_NAME:$NEW_TAG
 
-echo "Развертывание нового контейнера..."
-docker run -d --name "${IMAGE_NAME}_${NEW_TAG}" -p 3000:3000 $IMAGE_NAME:$NEW_TAG
-
-echo "Очистка старых образов..."
-docker image prune -f
-
-echo "Проверка..."
-if ! docker ps | grep -q "${IMAGE_NAME}_${NEW_TAG}"; then
-  echo "Ошибка: Контейнер не запущен."
-  exit 1
-fi
-
-echo "Деплой успешно завершен."
+echo "Деплой успешно завершен!"
