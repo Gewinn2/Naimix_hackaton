@@ -49,7 +49,7 @@ services:
     volumes:
       - ./internal/log/grafana-provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./internal/log/grafana-provisioning/alerting:/etc/grafana/provisioning/alerting
-    image: grafana/grafana:11.3.0-security-01
+    image: grafana/grafana
     ports:
       - "3000:3000"
     depends_on:
