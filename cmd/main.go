@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
+	_ "server/docs"
 	"server/internal/config"
 	"server/internal/handler"
 	logger "server/internal/log"
@@ -11,6 +12,9 @@ import (
 	"server/internal/service"
 )
 
+// @title TARO API
+// @version 1.0
+// @BasePath /
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("No .env file found")
