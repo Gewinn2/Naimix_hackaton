@@ -3,7 +3,9 @@ package config
 import "os"
 
 type Application struct {
-	ProductionType string
+	ProductionType  string
+	SigningKey      string
+	TokenExpiration string
 }
 
 type Db struct {
@@ -22,7 +24,9 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		Application: Application{
-			ProductionType: os.Getenv("PRODUCTION_TYPE"),
+			ProductionType:  os.Getenv("PRODUCTION_TYPE"),
+			SigningKey:      os.Getenv("SIGNING_KEY"),
+			TokenExpiration: os.Getenv("TOKEN_EXPIRATION"),
 		},
 		Db: Db{
 			Host:     os.Getenv("POSTGRESQL_HOST"),

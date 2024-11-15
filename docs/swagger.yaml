@@ -1,7 +1,141 @@
 basePath: /
+definitions:
+  entities.CreateUserRequest:
+    properties:
+      birth_date:
+        example: "1990-01-01"
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      name:
+        example: John
+        type: string
+      password:
+        example: P@ssw0rd123
+        type: string
+      phone_number:
+        example: "+1234567890"
+        type: string
+      role:
+        example: HR manager
+        type: string
+      surname:
+        example: Doe
+        type: string
+      third_name:
+        example: Middle
+        type: string
+    type: object
+  entities.CreateUserResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzMxNzE1ODM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.4PZY_8iDHCeACmPs5woqtowvCrrByTB4Gadr6oLdlZg
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
+        type: string
+    type: object
+  entities.ErrorResponse:
+    properties:
+      error:
+        example: Invalid data provided
+        type: string
+    type: object
+  entities.LoginUserRequest:
+    properties:
+      email:
+        example: john.doe@example.com
+        type: string
+      password:
+        example: P@ssw0rd123
+        type: string
+      phone_number:
+        example: "+1234567890"
+        type: string
+    type: object
+  entities.LoginUserResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzMxNzE1ODM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.4PZY_8iDHCeACmPs5woqtowvCrrByTB4Gadr6oLdlZg
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
+        type: string
+    type: object
 info:
   contact: {}
-  title: TARO API
+  title: Harmony Compass API
   version: "1.0"
-paths: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User login data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.LoginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.LoginUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Login user
+      tags:
+      - user
+  /signup:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User registration data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Sign up user
+      tags:
+      - user
 swagger: "2.0"

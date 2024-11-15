@@ -37,6 +37,8 @@ func (h *Handler) Router() *fiber.App {
 	}))
 	f.Use(log.RequestLogger(h.logger))
 	f.Get("/swagger/*", swagger.HandlerDefault)
+	f.Post("/signup", h.SignUp)
+	f.Post("/login", h.Login)
 	//authGroup := f.Group("/auth")
 	//authGroup.Use(func(c *fiber.Ctx) {
 	//	_ = pkg.WithJWTAuth(c, h.conf.Application.SigningKey)

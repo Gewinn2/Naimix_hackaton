@@ -12,7 +12,7 @@ import (
 	"server/internal/service"
 )
 
-// @title TARO API
+// @title Harmony Compass API
 // @version 1.0
 // @BasePath /
 func main() {
