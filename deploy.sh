@@ -9,7 +9,7 @@ NEW_TAG=$(date +"%Y%m%d%H%M")
 echo "Начало деплоя обновления бэкенда!"
 
 echo "Пересборка контейнеров..."
-docker-compose -f $DOCKER_COMPOSE_FILE build
+docker compose -f $DOCKER_COMPOSE_FILE build
 
 echo "Тегирование: $NEW_TAG..."
 for IMAGE in $(docker compose -f $DOCKER_COMPOSE_FILE config | grep 'image:' | awk '{print $2}'); do
