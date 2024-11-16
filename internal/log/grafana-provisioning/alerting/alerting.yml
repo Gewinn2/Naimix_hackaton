@@ -66,7 +66,7 @@ contactPoints:
         type: telegram
         settings:
           bottoken: ${TG_BOT_TOKEN}
-          chatid: ${TG_CHAT_ID}
+          chatid: "${TG_CHAT_ID}"
           disable_notification: false
           disable_web_page_preview: false
           protect_content: false
