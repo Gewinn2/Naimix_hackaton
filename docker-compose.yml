@@ -49,7 +49,7 @@ services:
     volumes:
       - ./internal/log/grafana-provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./internal/log/grafana-provisioning/alerting:/etc/grafana/provisioning/alerting
-    image: grafana/grafana:latest
+    image: grafana/grafana
     ports:
       - "3000:3000"
     depends_on:
@@ -90,7 +90,6 @@ services:
       POSTGRES_DB: "${POSTGRESQL_DB}"
       POSTGRES_USER: "${POSTGRESQL_USER}"
       POSTGRES_PASSWORD: "${POSTGRESQL_PASSWORD}"
-      PGDATA: "${PGDATA_PATH}"
     volumes:
       - ./.data/postgres/dump:/docker-entrypoint-initdb.d/db.sql
       - ./.data/postgres/pgdata:/var/lib/postgresql/data/pgdata
