@@ -1,4 +1,4 @@
-package service
+package taro
 
 import (
 	"context"
@@ -20,12 +20,12 @@ func NewTaroService(repository repository.TaroCardRepository) *TaroService {
 	}
 }
 
-func (s *TaroService) GetById(c context.Context, id int) (*entities.TaroCard, error) {
+func (s *TaroService) GetById(c context.Context, id int) ([]entities.TaroCard, error) {
 	ctx, cancel := context.WithTimeout(c, s.timeout)
 	defer cancel()
 
 	log.Println("Calling repository to get Taro card")
-	card, err := s.repository.GetById(ctx, id)
+	card, err := s.repository.GetCardsByCategoryID(ctx, id)
 	if err != nil {
 		log.Printf("Error fetching card from repository: %v", err)
 		return nil, err

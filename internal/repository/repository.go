@@ -23,7 +23,8 @@ type CompanyMemberRepository interface {
 }
 
 type TaroCardRepository interface {
-	GetById(context.Context, int) (*entities.TaroCard, error)
+	GetCardsByCategoryID(context.Context, int) ([]entities.TaroCard, error)
+	GetCategoryCount(context.Context, int) (int, error)
 }
 
 type Repository struct {

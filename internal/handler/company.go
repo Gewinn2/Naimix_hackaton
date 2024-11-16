@@ -48,7 +48,7 @@ func (h *Handler) GetCompanyMembers(c *fiber.Ctx) error {
 
 	request := &entities.GetCompanyMembersInfoRequest{CompanyID: companyId}
 
-	res, err := h.services.CompanyService.GetAll(c.Context(), request)
+	res, err := h.services.CompanyService.GetAllMembers(c.Context(), request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}

@@ -13,7 +13,13 @@ type CosmogramRequestBody struct {
 }
 
 type CosmogramResponseBody struct {
-	FullName             string `json:"full_name" example:"Doe John Petrovich"`
+	Compatibilities []Compatibility `json:"compatibilities"`
+	Cosmogram       Subject2        `json:"cosmogram"`
+}
+
+type Compatibility struct {
+	CandidateFullName    string `json:"candidate_full_name" example:"Doe John Petrovich"`
+	EmployeeFullName     string `json:"employee_full_name" example:"Doe John Petrovich"`
 	Communication        int    `json:"communication"`
 	CommunicationComment string `json:"communication_comment"`
 	Emotions             int    `json:"emotions"`
