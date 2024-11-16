@@ -94,7 +94,7 @@ services:
       - ./.data/postgres/dump:/docker-entrypoint-initdb.d/db.sql
       - ./.data/postgres/pgdata:/var/lib/postgresql/data/pgdata
     ports:
-      - "$127.0.0.1:{POSTGRESQL_PORT}:5432"
+      - "127.0.0.1:${POSTGRESQL_PORT}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRESQL_USER} -d ${POSTGRESQL_DB}"]
       interval: 10s
