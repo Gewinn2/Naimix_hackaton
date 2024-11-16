@@ -252,7 +252,7 @@ const docTemplate = `{
                 "tags": [
                     "tarot"
                 ],
-                "summary": "Get a tarot card by ID",
+                "summary": "Get a tarot card by category ID",
                 "parameters": [
                     {
                         "type": "integer",

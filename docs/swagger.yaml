@@ -427,7 +427,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/entities.ErrorResponse'
-      summary: Get a tarot card by ID
+      summary: Get a tarot card by category ID
       tags:
       - tarot
   /users:
