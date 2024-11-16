@@ -1,7 +1,7 @@
 <template>
   <StatusWindow />
   <Header />
-  <RouterView />
+  <RouterView class="main-bg"/>
 </template>
 <style v-global>
 .list-enter-active,

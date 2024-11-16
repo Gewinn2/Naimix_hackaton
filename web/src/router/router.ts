@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useHeaderStore } from "@/stores/headerStore";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -40,5 +41,32 @@ export const router = createRouter({
       component: () => import('../pages/MainPage.vue'),
       meta: {requiresAuth: true},
     },
+    {
+      name: 'AccountPage',
+      path: '/account',
+      component: () => import('../pages/AccountPage.vue'),
+      meta: {requiresAuth: true},
+    },
+    {
+      name: 'CosmogrammPage',
+      path: '/cosmogramm',
+      component: () => import('../pages/CosmogrammPage.vue'),
+      meta: {requiresAuth: true},
+    },
+    {
+      name: 'TarotPage',
+      path: '/cosmogramm',
+      component: () => import('../pages/TarotPage.vue'),
+      meta: {requiresAuth: true},
+    },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const headerStore = useHeaderStore();
+  headerStore.currentPage = to.name === undefined ? '' : to.name.toString();
+  
+  if(to.name === undefined) next({name: 'LoginPage'});
+  
+  next();
 });

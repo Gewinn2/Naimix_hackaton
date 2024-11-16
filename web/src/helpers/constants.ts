@@ -35,6 +35,13 @@ export interface IApiSignUpData{
   birth_date: string,
 };
 
+export interface IUsersList{
+  id: number,
+  name: string,
+  role: string,
+  isChoosed: boolean,
+}
+
 //enums
 
 export enum StatusCodes {

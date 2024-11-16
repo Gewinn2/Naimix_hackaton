@@ -20,7 +20,6 @@ export default{
   },
   methods:{
     getCard(cardID: number):string {
-      console.log(GET_CARD_IMAGE(cardID));
       return GET_CARD_IMAGE(cardID);
     }
   }
