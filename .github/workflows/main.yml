@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - frontend
-      - backend
+      # - backend
 
 jobs:
   deploy:
@@ -28,11 +28,11 @@ jobs:
           ./deploy.sh
         EOF
 
-    - name: deploy-backend
-      if: github.ref == 'refs/heads/backend'
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
-          cd /root/.hackathon/backend/
-          git pull origin backend
-          ./deploy.sh
-        EOF
+    # - name: deploy-backend
+    #   if: github.ref == 'refs/heads/backend'
+    #   run: |
+    #     ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+    #       cd /root/.hackathon/backend/
+    #       git pull origin backend
+    #       ./deploy.sh
+    #     EOF
