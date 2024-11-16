@@ -22,8 +22,13 @@ type CompanyMemberRepository interface {
 	GetAll(context.Context, int) ([]entities.CompanyMemberInfo, error)
 }
 
+type TaroCardRepository interface {
+	GetById(context.Context, int) (*entities.TaroCard, error)
+}
+
 type Repository struct {
 	User          UserRepository
 	Company       CompanyRepository
 	CompanyMember CompanyMemberRepository
+	TaroCard      TaroCardRepository
 }

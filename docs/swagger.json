@@ -188,6 +188,49 @@
                 }
             }
         },
+        "/tarot/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tarot"
+                ],
+                "summary": "Get a tarot card by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Tarot card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the tarot card",
+                        "schema": {
+                            "$ref": "#/definitions/entities.TaroCard"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "consumes": [
@@ -362,6 +405,20 @@
                 "refresh_token": {
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY"
+                }
+            }
+        },
+        "entities.TaroCard": {
+            "type": "object",
+            "properties": {
+                "direct_meaning": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "reverse_meaning": {
+                    "type": "string"
                 }
             }
         },

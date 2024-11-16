@@ -42,6 +42,7 @@ func (h *Handler) Router() *fiber.App {
 	f.Get("/users", h.GetAllUsers)
 	f.Post("/company/create", h.CreateCompany)
 	f.Get("/company/:id/members", h.GetCompanyMembers)
+	f.Get("/card/:id", h.GetTaroCard)
 
 	//authGroup := f.Group("/auth")
 	//authGroup.Use(func(c *fiber.Ctx) {
