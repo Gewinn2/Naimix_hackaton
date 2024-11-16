@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"log"
 	"strconv"
 )
 
@@ -19,12 +20,15 @@ func (h *Handler) GetTaroCard(c *fiber.Ctx) error {
 	IdStr := c.Params("id")
 	ID, err := strconv.Atoi(IdStr)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID format"})
 	}
 
+	log.Println("Calling service to get Taro card")
 	card, err := h.services.TaroService.GetById(c.Context(), ID)
 	if err != nil {
+		log.Printf("Error getting Taro card: %v", err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 	return c.Status(fiber.StatusOK).JSON(card)
+
 }

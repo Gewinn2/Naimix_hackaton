@@ -27,13 +27,12 @@ type Service struct {
 	UserService      *UserService
 	CompanyService   *CompanyService
 	TaroService      *TaroService
-	conf             *config.Config
 	CosmogramService *CosmogramService
+	conf             *config.Config
 }
 
 func NewService(repositories *repository.Repository, conf *config.Config) *Service {
 	return &Service{
-
 		UserService:      NewUserService(repositories.User, conf),
 		CompanyService:   NewCompanyService(repositories.Company, repositories.CompanyMember),
 		TaroService:      NewTaroService(repositories.TaroCard),
