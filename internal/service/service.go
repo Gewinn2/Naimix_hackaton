@@ -18,7 +18,7 @@ type CompanyService interface {
 }
 
 type TaroService interface {
-	GetById(ctx context.Context, id int) ([]entities.TaroCard, error)
+	GetCard(ctx context.Context, id int) (*entities.TaroCard, error)
 }
 
 type CosmogramService interface {
