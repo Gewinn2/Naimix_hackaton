@@ -285,7 +285,7 @@ info:
   title: Harmony Compass API
   version: "1.0"
 paths:
-  /companies/{id}/members:
+  /company/{id}/members:
     get:
       consumes:
       - application/json
