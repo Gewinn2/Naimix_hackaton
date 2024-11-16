@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 
-import { GET_CARD_IMAGE, TAROT_CARDS } from '@/helpers/constants';
+import { TAROT_CARDS } from '@/helpers/constants';
 import CardItem from '@/shared/cardItem.vue';
 
 export default{
