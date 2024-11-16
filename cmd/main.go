@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"log"
 	_ "server/docs"
 	"server/internal/config"
@@ -10,13 +9,15 @@ import (
 	logger "server/internal/log"
 	"server/internal/repository/postgres"
 	"server/internal/service"
+
+	"github.com/joho/godotenv"
 )
 
 // @title Harmony Compass API
 // @version 1.0
 // @BasePath /
 func main() {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("./.env"); err != nil {
 		log.Fatal("No .env file found")
 	}
 	conf := config.NewConfig()
