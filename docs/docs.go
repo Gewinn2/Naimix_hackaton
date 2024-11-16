@@ -320,23 +320,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entities.Aspect": {
-            "type": "object",
-            "properties": {
-                "aspect": {
-                    "type": "string"
-                },
-                "orbit": {
-                    "type": "number"
-                },
-                "p1_name": {
-                    "type": "string"
-                },
-                "p2_name": {
-                    "type": "string"
-                }
-            }
-        },
         "entities.CompanyMemberInfo": {
             "type": "object",
             "properties": {
@@ -360,26 +343,8 @@ const docTemplate = `{
         "entities.CosmogramApiResponseBody": {
             "type": "object",
             "properties": {
-                "aspects": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/entities.Aspect"
-                    }
-                },
                 "data": {
                     "$ref": "#/definitions/entities.Data"
-                },
-                "is_destiny_sign": {
-                    "type": "boolean"
-                },
-                "score": {
-                    "type": "integer"
-                },
-                "score_description": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
                 }
             }
         },
@@ -387,12 +352,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "candidate": {
-                    "$ref": "#/definitions/entities.User"
+                    "$ref": "#/definitions/entities.EmployeeRequest"
                 },
                 "staff": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/entities.User"
+                        "$ref": "#/definitions/entities.EmployeeRequest"
                     }
                 }
             }
@@ -482,6 +447,27 @@ const docTemplate = `{
                 }
             }
         },
+        "entities.EmployeeRequest": {
+            "type": "object",
+            "properties": {
+                "birth_date": {
+                    "type": "string",
+                    "example": "1990-01-01"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "surname": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "third_name": {
+                    "type": "string",
+                    "example": "Petrovich"
+                }
+            }
+        },
         "entities.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -529,53 +515,17 @@ const docTemplate = `{
                 }
             }
         },
-<<<<<<< HEAD
-        "entities.TaroCard": {
-            "type": "object",
-            "properties": {
-                "direct_meaning": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "reverse_meaning": {
-=======
         "entities.Planet": {
             "type": "object",
             "properties": {
                 "abs_pos": {
                     "type": "number"
                 },
-                "element": {
-                    "type": "string"
-                },
-                "emoji": {
-                    "type": "string"
-                },
-                "house": {
-                    "type": "string"
-                },
                 "name": {
-                    "type": "string"
-                },
-                "point_type": {
-                    "type": "string"
-                },
-                "position": {
-                    "type": "number"
-                },
-                "quality": {
                     "type": "string"
                 },
                 "retrograde": {
                     "type": "boolean"
-                },
-                "sign": {
-                    "type": "string"
-                },
-                "sign_num": {
-                    "type": "integer"
                 }
             }
         },
@@ -594,21 +544,6 @@ const docTemplate = `{
                 "hour": {
                     "type": "integer"
                 },
-                "houses_system_identifier": {
-                    "type": "string"
-                },
-                "houses_system_name": {
-                    "type": "string"
-                },
-                "iso_formatted_local_datetime": {
-                    "type": "string"
-                },
-                "iso_formatted_utc_datetime": {
-                    "type": "string"
-                },
-                "julian_day": {
-                    "type": "number"
-                },
                 "jupiter": {
                     "$ref": "#/definitions/entities.Planet"
                 },
@@ -616,9 +551,6 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "lng": {
-                    "type": "number"
-                },
-                "local_time": {
                     "type": "number"
                 },
                 "mars": {
@@ -654,38 +586,36 @@ const docTemplate = `{
                 "neptune": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "perspective_type": {
-                    "type": "string"
-                },
                 "pluto": {
                     "$ref": "#/definitions/entities.Planet"
                 },
                 "saturn": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "sidereal_mode": {
-                    "type": "string"
-                },
                 "sun": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "tz_str": {
-                    "type": "string"
-                },
                 "uranus": {
                     "$ref": "#/definitions/entities.Planet"
-                },
-                "utc_time": {
-                    "type": "number"
                 },
                 "venus": {
                     "$ref": "#/definitions/entities.Planet"
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "entities.TaroCard": {
+            "type": "object",
+            "properties": {
+                "direct_meaning": {
+                    "type": "string"
                 },
-                "zodiac_type": {
->>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
+                "id": {
+                    "type": "integer"
+                },
+                "reverse_meaning": {
                     "type": "string"
                 }
             }

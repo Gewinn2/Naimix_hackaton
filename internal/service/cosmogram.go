@@ -6,9 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"server/internal/entities"
 	"server/util"
+	"strings"
 	"time"
 )
 
@@ -22,7 +24,7 @@ func NewCosmogramService() *CosmogramService {
 	}
 }
 
-func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBody) ([]entities.CosmogramApiResponseBody, error) {
+func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBody) ([]entities.CosmogramResponseBody, error) {
 	year, month, day, err := util.BirthDateParser(cosmogramRequestBody.Candidate.BirthDate)
 	if err != nil {
 		return nil, err
@@ -41,33 +43,29 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 	candidate.Timezone = "Europe/Moscow"
 	candidate.ZodiacType = "Tropic"
 
-	fmt.Println(candidate)
-
 	var staff []entities.Subject
 	for i := range cosmogramRequestBody.Staff {
 		year, month, day, err = util.BirthDateParser(cosmogramRequestBody.Staff[i].BirthDate)
 		if err != nil {
 			return nil, err
 		}
-		var personal entities.Subject
-		personal.Name = fmt.Sprintf("%s %s %s", cosmogramRequestBody.Candidate.Surname, cosmogramRequestBody.Candidate.Name, cosmogramRequestBody.Candidate.ThirdName)
-		personal.Year = year
-		personal.Month = month
-		personal.Day = day
-		personal.Hour = 12
-		personal.Minute = 11
-		personal.Longitude = 37.6156
-		personal.Latitude = 55.7522
-		personal.City = "Moscow"
-		personal.Nation = "RU"
-		personal.Timezone = "Europe/Moscow"
-		personal.ZodiacType = "Tropic"
-		staff = append(staff, personal)
-
-		fmt.Println(personal)
+		var employee entities.Subject
+		employee.Name = fmt.Sprintf("%s %s %s", cosmogramRequestBody.Candidate.Surname, cosmogramRequestBody.Candidate.Name, cosmogramRequestBody.Candidate.ThirdName)
+		employee.Year = year
+		employee.Month = month
+		employee.Day = day
+		employee.Hour = 12
+		employee.Minute = 11
+		employee.Longitude = 37.6156
+		employee.Latitude = 55.7522
+		employee.City = "Moscow"
+		employee.Nation = "RU"
+		employee.Timezone = "Europe/Moscow"
+		employee.ZodiacType = "Tropic"
+		staff = append(staff, employee)
 	}
 
-	var responses []entities.CosmogramApiResponseBody
+	var responses []entities.CosmogramResponseBody
 	for i := range staff {
 		requestBody := entities.CosmogramApiRequestBody{
 			FirstSubject:  candidate,
@@ -106,15 +104,181 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 			return nil, errors.New(fmt.Sprintf("Ошибка при чтении ответа: %v", err))
 		}
 
-		fmt.Printf("Ответ от сервера: %s\n", body)
-
-		var response entities.CosmogramApiResponseBody
-		err = json.Unmarshal(body, &response)
+		var apiResponse entities.CosmogramApiResponseBody
+		err = json.Unmarshal(body, &apiResponse)
 		if err != nil {
 			return nil, errors.New(fmt.Sprintf("Ошибка при парсинге ответа: %v", err))
 		}
+
+		aspects := ComparePlanets(apiResponse.Data.FirstSubject, apiResponse.Data.SecondSubject)
+		scores := EvaluateCategory(aspects)
+		var response entities.CosmogramResponseBody
+		response.FullName = apiResponse.Data.FirstSubject.Name
+		response.Communication = scores["Communication"]
+		response.CommunicationComment = AddCommentToCommunication(scores["Communication"])
+		response.Emotions = scores["Emotions"]
+		response.EmotionsComment = AddCommentToEmotions(scores["Emotions"])
+		response.Work = scores["Work"]
+		response.WorkComment = AddCommentToWork(scores["Work"])
 		responses = append(responses, response)
 		resp.Body.Close()
 	}
 	return responses, nil
+}
+
+func EvaluateCategory(aspects map[string][]string) map[string]int {
+	scores := map[string]int{
+		"Communication": 0,
+		"Emotions":      0,
+		"Work":          0,
+	}
+
+	// Общение (Меркурий)
+	if contains(aspects, "Conjunction", "Mercury", "Mercury") {
+		scores["Communication"] += 100
+	} else if contains(aspects, "Opposition", "Mercury", "Mercury") {
+		scores["Communication"] += 90
+	} else if contains(aspects, "Square", "Mercury", "Mercury") {
+		scores["Communication"] += 50
+	} else if contains(aspects, "Opposition", "Mercury", "Mercury") {
+		scores["Communication"] += 35
+	}
+
+	// Эмоции (Луна)
+	if contains(aspects, "Conjunction", "Moon", "Moon") {
+		scores["Emotions"] += 100
+	} else if contains(aspects, "Trine", "Moon", "Moon") {
+		scores["Emotions"] += 90
+	} else if contains(aspects, "Square", "Moon", "Moon") {
+		scores["Emotions"] += 50
+	} else if contains(aspects, "Opposition", "Moon", "Moon") {
+		scores["Emotions"] += 35
+	}
+
+	// Работа (Солнце и Сатурн)
+	if contains(aspects, "Trine", "Sun", "Saturn") {
+		scores["Work"] += 100
+	} else if contains(aspects, "Sextile", "Sun", "Saturn") {
+		scores["Work"] += 90
+	} else if contains(aspects, "Square", "Sun", "Saturn") {
+		scores["Work"] += 40
+	}
+
+	return scores
+}
+
+func contains(aspects map[string][]string, aspectType, planetA, planetB string) bool {
+	for _, connection := range aspects[aspectType] {
+		if strings.Contains(connection, planetA) && strings.Contains(connection, planetB) {
+			return true
+		}
+	}
+	return false
+}
+
+func ComparePlanets(subjectA, subjectB entities.Subject2) map[string][]string {
+	aspects := make(map[string][]string)
+
+	// Список планет для анализа
+	planets := []struct {
+		name    string
+		planetA entities.Planet
+		planetB entities.Planet
+	}{
+		{"Sun", subjectA.Sun, subjectB.Sun},
+		{"Moon", subjectA.Moon, subjectB.Moon},
+		{"Mercury", subjectA.Mercury, subjectB.Mercury},
+		{"Venus", subjectA.Venus, subjectB.Venus},
+		{"Mars", subjectA.Mars, subjectB.Mars},
+		{"Jupiter", subjectA.Jupiter, subjectB.Jupiter},
+		{"Saturn", subjectA.Saturn, subjectB.Saturn},
+		{"Uranus", subjectA.Uranus, subjectB.Uranus},
+		{"Neptune", subjectA.Neptune, subjectB.Neptune},
+		{"Pluto", subjectA.Pluto, subjectB.Pluto},
+		{"Chiron", subjectA.Chiron, subjectB.Chiron},
+		{"MeanLilith", subjectA.MeanLilith, subjectB.MeanLilith},
+		{"MeanNode", subjectA.MeanNode, subjectB.MeanNode},
+		{"MeanSouthNode", subjectA.MeanSouthNode, subjectB.MeanSouthNode},
+	}
+
+	// Сравнение планет между двумя субъектами
+	for _, pair := range planets {
+		aspect := CalculateAspect(pair.planetA, pair.planetB)
+		if aspect != "No Major Aspect" {
+			aspects[aspect] = append(aspects[aspect], fmt.Sprintf("%s (%s) ↔ %s (%s)", pair.name, subjectA.Name, pair.name, subjectB.Name))
+		}
+	}
+
+	return aspects
+}
+
+func CalculateAspect(planetA, planetB entities.Planet) string {
+	diff := math.Abs(planetA.AbsPos - planetB.AbsPos)
+	if diff > 180 {
+		diff = 360 - diff
+	}
+
+	switch {
+	case math.Abs(diff) <= 5:
+		return "Conjunction" // Соединение
+	case math.Abs(diff-60) <= 5:
+		return "Sextile" // Секстиль
+	case math.Abs(diff-90) <= 5:
+		return "Square" // Квадрат
+	case math.Abs(diff-120) <= 5:
+		return "Trine" // Тригон
+	case math.Abs(diff-180) <= 5:
+		return "Opposition" // Оппозиция
+	default:
+		return "No Major Aspect"
+	}
+}
+
+func AddCommentToCommunication(value int) string {
+	comment := ""
+	if value == 100 {
+		comment = "Ваши способы общения идеально совпадают. Вы понимаете друг друга с полуслова, и ваши разговоры всегда наполнены смыслом и взаимопониманием. Это создает крепкую основу для доверительных отношений."
+	} else if value == 90 {
+		comment = "Хотя ваши стили общения могут отличаться, это создает интересный динамичный обмен мнениями. Вы способны учиться друг у друга, даже если иногда возникают разногласия. Это может стать источником роста и понимания."
+	} else if value == 50 {
+		comment = "Ваши подходы к общению могут быть немного конфликтными. Иногда возникают недопонимания, но при желании вы можете найти общий язык. Важно работать над тем, чтобы ваши различия не стали преградой для общения."
+	} else if value == 35 {
+		comment = "Ваши стили общения могут быть довольно противоположными, что иногда приводит к напряженности. Необходимо прикладывать усилия, чтобы избежать конфликтов и найти способы конструктивного диалога."
+	} else {
+		comment = "К сожалению, ваши способы общения находятся на противоположных полюсах. Вы можете испытывать трудности в понимании друг друга, что может приводить к частым недопониманиям и конфликтам. Возможно, стоит обратить внимание на свои стили общения и попытаться найти точки соприкосновения, чтобы улучшить взаимопонимание."
+	}
+
+	return comment
+}
+
+func AddCommentToEmotions(value int) string {
+	comment := "Ваши эмоциональные связи невероятно крепки. Вы чувствуете друг друга на интуитивном уровне и можете поддерживать друг друга в любых ситуациях. Это создает глубокую привязанность и понимание."
+	if value == 100 {
+		comment = ""
+	} else if value == 90 {
+		comment = "Ваши эмоциональные реакции гармонично сочетаются. Вы способны поддерживать друг друга и находить общий язык в сложных ситуациях. Это создает атмосферу доверия и спокойствия в ваших отношениях."
+	} else if value == 50 {
+		comment = "Ваши эмоциональные отклики могут иногда конфликтовать. Это может приводить к недопониманию и напряженности, но при желании вы можете работать над улучшением взаимопонимания."
+	} else if value == 35 {
+		comment = "Ваши эмоциональные стили могут быть противоположными, что иногда создает трудности в понимании друг друга. Важно быть терпеливыми и открытыми для обсуждения своих чувств, чтобы избежать конфликтов."
+	} else {
+		comment = "Ваши эмоциональные связи кажутся очень слабыми или даже отсутствуют. Вы можете не понимать друг друга на глубоком уровне, что приводит к чувству отдаленности и отсутствию поддержки в трудные моменты. Это может быть сигналом к тому, чтобы поработать над развитием эмоциональной близости и открытости в ваших отношениях."
+	}
+
+	return comment
+}
+
+func AddCommentToWork(value int) string {
+	comment := ""
+	if value == 100 {
+		comment = "Ваши профессиональные стремления и цели идеально совпадают. Вы способны эффективно работать вместе, поддерживая друг друга на пути к успеху. Это создает отличную команду, которая может достигать высоких результатов."
+	} else if value == 90 {
+		comment = "Вы оба понимаете важность работы и стремитесь к достижению общих целей. Ваше сотрудничество приносит плоды, и вы можете легко находить компромиссы в рабочих вопросах."
+	} else if value == 40 {
+		comment = "Ваши профессиональные взгляды могут иногда конфликтовать, что создает определенные трудности в совместной работе. Однако это может быть и возможностью для роста, если вы будете открыты для обсуждения и поиска решений"
+	} else {
+		comment = "Ваши профессиональные взгляды и подходы к работе полностью не совпадают. Это может создавать значительные препятствия в совместной деятельности и мешать достижению общих целей. Возможно, стоит обсудить свои ожидания и найти способы для улучшения сотрудничества, чтобы избежать конфликтов и недопонимания."
+	}
+
+	return comment
 }
