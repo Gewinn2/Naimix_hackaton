@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"log"
+	log "server/internal/log"
 	"strconv"
 )
 
@@ -20,15 +20,22 @@ func (h *Handler) GetTaroCard(c *fiber.Ctx) error {
 	CategoryIdStr := c.Params("id")
 	CategoryID, err := strconv.Atoi(CategoryIdStr)
 	if err != nil {
+		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
+			Url: c.OriginalURL(), Status: fiber.StatusBadRequest})
+		logEvent.Msg("invalid parameter")
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID format"})
 	}
 
-	log.Println("Calling service to get Taro card")
+	h.logger.Debug().Msg("call h.services.TaroService.GetById")
 	card, err := h.services.TaroService.GetById(c.Context(), CategoryID)
 	if err != nil {
-		log.Printf("Error getting Taro card: %v", err)
+		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
+			Url: c.OriginalURL(), Status: fiber.StatusInternalServerError})
+		logEvent.Msg("error getting Taro card")
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
+	logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Info", Method: c.Method(),
+		Url: c.OriginalURL(), Status: fiber.StatusOK})
+	logEvent.Msg("success")
 	return c.Status(fiber.StatusOK).JSON(card)
-
 }

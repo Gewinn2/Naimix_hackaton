@@ -7,52 +7,6 @@
     },
     "basePath": "/",
     "paths": {
-        "/companies/{id}/members": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "company"
-                ],
-                "summary": "Get members of a company by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Company ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of company members",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entities.CompanyMemberInfo"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/entities.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/entities.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/company/create": {
             "post": {
                 "consumes": [
@@ -98,6 +52,52 @@
                 }
             }
         },
+        "/company/{id}/members": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "Get members of a company by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of company members",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entities.CompanyMemberInfo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/cosmogram": {
             "post": {
                 "consumes": [
@@ -125,7 +125,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.CosmogramApiResponseBody"
+                            "$ref": "#/definitions/entities.CosmogramResponseBody"
                         }
                     },
                     "400": {
@@ -312,23 +312,6 @@
         }
     },
     "definitions": {
-        "entities.Aspect": {
-            "type": "object",
-            "properties": {
-                "aspect": {
-                    "type": "string"
-                },
-                "orbit": {
-                    "type": "number"
-                },
-                "p1_name": {
-                    "type": "string"
-                },
-                "p2_name": {
-                    "type": "string"
-                }
-            }
-        },
         "entities.CompanyMemberInfo": {
             "type": "object",
             "properties": {
@@ -349,28 +332,33 @@
                 }
             }
         },
-        "entities.CosmogramApiResponseBody": {
+        "entities.Compatibility": {
             "type": "object",
             "properties": {
-                "aspects": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/entities.Aspect"
-                    }
+                "candidate_full_name": {
+                    "type": "string",
+                    "example": "Doe John Petrovich"
                 },
-                "data": {
-                    "$ref": "#/definitions/entities.Data"
-                },
-                "is_destiny_sign": {
-                    "type": "boolean"
-                },
-                "score": {
+                "communication": {
                     "type": "integer"
                 },
-                "score_description": {
+                "communication_comment": {
                     "type": "string"
                 },
-                "status": {
+                "emotions": {
+                    "type": "integer"
+                },
+                "emotions_comment": {
+                    "type": "string"
+                },
+                "employee_full_name": {
+                    "type": "string",
+                    "example": "Doe John Petrovich"
+                },
+                "work": {
+                    "type": "integer"
+                },
+                "work_comment": {
                     "type": "string"
                 }
             }
@@ -379,13 +367,27 @@
             "type": "object",
             "properties": {
                 "candidate": {
-                    "$ref": "#/definitions/entities.User"
+                    "$ref": "#/definitions/entities.EmployeeRequest"
                 },
                 "staff": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/entities.User"
+                        "$ref": "#/definitions/entities.EmployeeRequest"
                     }
+                }
+            }
+        },
+        "entities.CosmogramResponseBody": {
+            "type": "object",
+            "properties": {
+                "compatibilities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entities.Compatibility"
+                    }
+                },
+                "cosmogram": {
+                    "$ref": "#/definitions/entities.Subject2"
                 }
             }
         },
@@ -463,14 +465,24 @@
                 }
             }
         },
-        "entities.Data": {
+        "entities.EmployeeRequest": {
             "type": "object",
             "properties": {
-                "first_subject": {
-                    "$ref": "#/definitions/entities.Subject2"
+                "birth_date": {
+                    "type": "string",
+                    "example": "1990-01-01"
                 },
-                "second_subject": {
-                    "$ref": "#/definitions/entities.Subject2"
+                "name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "surname": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "third_name": {
+                    "type": "string",
+                    "example": "Petrovich"
                 }
             }
         },
@@ -521,53 +533,17 @@
                 }
             }
         },
-<<<<<<< HEAD
-        "entities.TaroCard": {
-            "type": "object",
-            "properties": {
-                "direct_meaning": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "reverse_meaning": {
-=======
         "entities.Planet": {
             "type": "object",
             "properties": {
                 "abs_pos": {
                     "type": "number"
                 },
-                "element": {
-                    "type": "string"
-                },
-                "emoji": {
-                    "type": "string"
-                },
-                "house": {
-                    "type": "string"
-                },
                 "name": {
-                    "type": "string"
-                },
-                "point_type": {
-                    "type": "string"
-                },
-                "position": {
-                    "type": "number"
-                },
-                "quality": {
                     "type": "string"
                 },
                 "retrograde": {
                     "type": "boolean"
-                },
-                "sign": {
-                    "type": "string"
-                },
-                "sign_num": {
-                    "type": "integer"
                 }
             }
         },
@@ -586,21 +562,6 @@
                 "hour": {
                     "type": "integer"
                 },
-                "houses_system_identifier": {
-                    "type": "string"
-                },
-                "houses_system_name": {
-                    "type": "string"
-                },
-                "iso_formatted_local_datetime": {
-                    "type": "string"
-                },
-                "iso_formatted_utc_datetime": {
-                    "type": "string"
-                },
-                "julian_day": {
-                    "type": "number"
-                },
                 "jupiter": {
                     "$ref": "#/definitions/entities.Planet"
                 },
@@ -608,9 +569,6 @@
                     "type": "number"
                 },
                 "lng": {
-                    "type": "number"
-                },
-                "local_time": {
                     "type": "number"
                 },
                 "mars": {
@@ -646,38 +604,36 @@
                 "neptune": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "perspective_type": {
-                    "type": "string"
-                },
                 "pluto": {
                     "$ref": "#/definitions/entities.Planet"
                 },
                 "saturn": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "sidereal_mode": {
-                    "type": "string"
-                },
                 "sun": {
                     "$ref": "#/definitions/entities.Planet"
                 },
-                "tz_str": {
-                    "type": "string"
-                },
                 "uranus": {
                     "$ref": "#/definitions/entities.Planet"
-                },
-                "utc_time": {
-                    "type": "number"
                 },
                 "venus": {
                     "$ref": "#/definitions/entities.Planet"
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "entities.TaroCard": {
+            "type": "object",
+            "properties": {
+                "direct_meaning": {
+                    "type": "string"
                 },
-                "zodiac_type": {
->>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
+                "id": {
+                    "type": "integer"
+                },
+                "reverse_meaning": {
                     "type": "string"
                 }
             }

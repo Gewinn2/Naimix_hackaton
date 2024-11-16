@@ -21,7 +21,7 @@ func (h *Handler) GetCosmogram(c *fiber.Ctx) error {
 	if err := c.BodyParser(&cosmogramRequestBody); err != nil {
 		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
 			Url: c.OriginalURL(), Status: fiber.StatusBadRequest})
-		logEvent.Msg("invalid request body")
+		logEvent.Msg(err.Error())
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 	}
 
@@ -30,9 +30,12 @@ func (h *Handler) GetCosmogram(c *fiber.Ctx) error {
 	if err != nil {
 		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
 			Url: c.OriginalURL(), Status: fiber.StatusInternalServerError})
-		logEvent.Msg("invalid request body")
+		logEvent.Msg(err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 
+	logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Info", Method: c.Method(),
+		Url: c.OriginalURL(), Status: fiber.StatusOK})
+	logEvent.Msg("success")
 	return c.Status(fiber.StatusOK).JSON(responses)
 }

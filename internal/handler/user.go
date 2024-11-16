@@ -132,7 +132,13 @@ func (h *Handler) GetAllUsers(c *fiber.Ctx) error {
 	h.logger.Debug().Msg("call h.services.UserService.GetAll")
 	users, err := h.services.UserService.GetAll(c.Context())
 	if err != nil {
+		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
+			Url: c.OriginalURL(), Status: fiber.StatusInternalServerError})
+		logEvent.Msg(err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
+	logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Info", Method: c.Method(),
+		Url: c.OriginalURL(), Status: fiber.StatusOK})
+	logEvent.Msg("success")
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"users": users})
 }
