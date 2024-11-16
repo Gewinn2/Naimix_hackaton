@@ -1,43 +1,46 @@
 #!/bin/bash
 
 set -e
+exec > /root/.hackathon/backend/backend_updater.log 2>&1
+set -x
 
 LOCKFILE="/tmp/backend_updater.lock"
+trap "rm -f $LOCKFILE; exit" INT TERM EXIT
 
 if [ -f "$LOCKFILE" ]; then
-  echo "another instance is running!"
+  echo "Another instance is running!"
   exit 1
 fi
 
-trap "rm -f $LOCKFILE; exit" INT TERM EXIT
 touch "$LOCKFILE"
 
-if [ ! -d ".git" ]; then
-  echo "${pwd} is not a git-repository dir"
-  rm -f "$LOCKFILE"
+# Переход в директорию проекта
+cd /root/.hackathon/backend || exit 1
+
+# Проверка на git репозиторий
+if ! /usr/bin/git rev-parse --show-toplevel > /dev/null 2>&1; then
+  echo "$(pwd) is not inside a git repository"
   exit 1
 fi
 
-git fetch origin
+# Обновление кода
+if ! /usr/bin/git fetch origin; then
+  echo "Error: Failed to fetch from origin"
+  exit 1
+fi
 
-LOCAL=$(git rev-parse HEAD)
-REMOTE=$(git rev-parse @{u})
+LOCAL=$(/usr/bin/git rev-parse HEAD)
+REMOTE=$(/usr/bin/git rev-parse @{u})
 
 if [ "$LOCAL" != "$REMOTE" ]; then
-  echo "found update!"
+  /usr/bin/git stash push -q --include-untracked || true
+  /usr/bin/git pull --rebase
 
-  git stash
-
-  git pull
-
-
-  if [ -x "./deploy.sh" ]; then
-    echo "deploying..."
+  if [ -f "./deploy.sh" ] && [ -x "./deploy.sh" ]; then
     ./deploy.sh
   else
-    echo "deploy.sh not found/not executable"
+    echo "Warning: deploy.sh is missing or not executable" >&2
   fi
-else
 fi
 
 rm -f "$LOCKFILE"
