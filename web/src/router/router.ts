@@ -55,7 +55,7 @@ export const router = createRouter({
     },
     {
       name: 'TarotPage',
-      path: '/cosmogramm',
+      path: '/tarot',
       component: () => import('../pages/TarotPage.vue'),
       meta: {requiresAuth: true},
     },
@@ -65,7 +65,7 @@ export const router = createRouter({
 router.beforeEach((to, from, next) => {
   const headerStore = useHeaderStore();
   headerStore.currentPage = to.name === undefined ? '' : to.name.toString();
-  
+
   if(to.name === undefined) next({name: 'LoginPage'});
   
   next();

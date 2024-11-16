@@ -14,7 +14,7 @@ export function API_CheckAuth(){
       reject(error);
     });
   });
-}
+};
 
 //login
 export function API_Login(data:IApiLoginData){
@@ -29,7 +29,7 @@ export function API_Login(data:IApiLoginData){
       reject(error);
     });
   });
-}
+};
 
 //signup
 export function API_SignUp(data:IApiSignUpData){
@@ -44,7 +44,7 @@ export function API_SignUp(data:IApiSignUpData){
       reject(error);
     });
   });
-}
+};
 
 //logout
 export function API_LogOut(){
@@ -59,4 +59,19 @@ export function API_LogOut(){
       reject(error);
     });
   });
-}
+};
+
+//logout
+export function API_Tarot(categoryID: number){
+  return new Promise((resolve, reject) => {
+    axios.get(`${API}/card/${categoryID}`)
+    .then(response => {
+      if(DEVMODE) console.log(`Card get, category[${categoryID}] success: `, response);
+      resolve(response);
+    })
+    .catch(error => {
+      if(DEVMODE) console.log(`Card get, category[${categoryID}] error: `, error);
+      reject(error);
+    });
+  });
+};
