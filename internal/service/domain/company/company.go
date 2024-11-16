@@ -1,4 +1,4 @@
-package service
+package company
 
 import (
 	"context"
@@ -41,7 +41,7 @@ func (s *CompanyService) CreateCompany(c context.Context, request *entities.Crea
 	return createdCompany, nil
 }
 
-func (s *CompanyService) GetAll(ctx context.Context, request *entities.GetCompanyMembersInfoRequest) ([]entities.CompanyMemberInfo, error) {
+func (s *CompanyService) GetAllMembers(ctx context.Context, request *entities.GetCompanyMembersInfoRequest) ([]entities.CompanyMemberInfo, error) {
 	ctx, cancel := context.WithTimeout(ctx, s.timeout)
 	defer cancel()
 

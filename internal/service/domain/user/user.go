@@ -1,4 +1,4 @@
-package service
+package user
 
 import (
 	"context"
@@ -120,7 +120,7 @@ func (s *UserService) Login(c context.Context, request *entities.LoginUserReques
 	}, nil
 }
 
-func (s *UserService) GetAll(ctx context.Context) ([]entities.User, error) {
+func (s *UserService) GetAll(ctx context.Context) (*[]entities.User, error) {
 	ctx, cancel := context.WithTimeout(ctx, s.timeout)
 	defer cancel()
 

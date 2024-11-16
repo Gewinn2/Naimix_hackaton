@@ -8,7 +8,7 @@ import (
 	"server/internal/handler"
 	logger "server/internal/log"
 	"server/internal/repository/postgres"
-	"server/internal/service"
+	"server/internal/service/domain"
 
 	"github.com/joho/godotenv"
 )
@@ -28,7 +28,7 @@ func main() {
 	}
 
 	repository := postgres.NewRepository(dbConn.GetDB())
-	services := service.NewService(repository, conf)
+	services := domain.NewService(repository, conf)
 	handlers := handler.NewHandler(services, log, conf)
 
 	app := handlers.Router()

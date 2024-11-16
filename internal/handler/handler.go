@@ -44,7 +44,7 @@ func (h *Handler) Router() *fiber.App {
 	f.Get("/users", h.GetAllUsers)
 	f.Post("/company/create", h.CreateCompany)
 	f.Get("/company/:id/members", h.GetCompanyMembers)
-	f.Get("/card/:id", h.GetTaroCard)
+	f.Get("/tarot/:id", h.GetTaroCard)
 
 	f.Post("/cosmogram", h.GetCosmogram)
 	authGroup := f.Group("/auth")
