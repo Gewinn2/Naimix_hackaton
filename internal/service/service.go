@@ -18,18 +18,25 @@ type Company interface {
 	GetAllMembers(context.Context, *entities.GetCompanyMembersInfoRequest) ([]entities.CompanyMemberInfo, error)
 }
 
+type Taro interface {
+	GetById(ctx context.Context, id int) (*entities.TaroCard, error)
+}
+
 // TODO Дополнить для других сервисов
 type Service struct {
 	UserService      *UserService
 	CompanyService   *CompanyService
-	CosmogramService *CosmogramService
+	TaroService      *TaroService
 	conf             *config.Config
+	CosmogramService *CosmogramService
 }
 
 func NewService(repositories *repository.Repository, conf *config.Config) *Service {
 	return &Service{
+
 		UserService:      NewUserService(repositories.User, conf),
 		CompanyService:   NewCompanyService(repositories.Company, repositories.CompanyMember),
+		TaroService:      NewTaroService(repositories.TaroCard),
 		CosmogramService: NewCosmogramService(),
 	}
 }

@@ -15,52 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/companies/{id}/members": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "company"
-                ],
-                "summary": "Get members of a company by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Company ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of company members",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entities.CompanyMemberInfo"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/entities.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/entities.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/company/create": {
             "post": {
                 "consumes": [
@@ -89,6 +43,52 @@ const docTemplate = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/entities.CreateCompanyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/company/{id}/members": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "Get members of a company by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of company members",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entities.CompanyMemberInfo"
+                            }
                         }
                     },
                     "400": {
@@ -224,6 +224,49 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/entities.CreateUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tarot/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tarot"
+                ],
+                "summary": "Get a tarot card by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Tarot card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the tarot card",
+                        "schema": {
+                            "$ref": "#/definitions/entities.TaroCard"
                         }
                     },
                     "400": {
@@ -486,6 +529,18 @@ const docTemplate = `{
                 }
             }
         },
+<<<<<<< HEAD
+        "entities.TaroCard": {
+            "type": "object",
+            "properties": {
+                "direct_meaning": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "reverse_meaning": {
+=======
         "entities.Planet": {
             "type": "object",
             "properties": {
@@ -630,6 +685,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "zodiac_type": {
+>>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
                     "type": "string"
                 }
             }
