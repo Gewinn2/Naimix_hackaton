@@ -22,7 +22,7 @@ jobs:
     - name: deploy-frontend
       if: github.ref == 'refs/heads/frontend'
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+        ssh -p 1337 -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
           cd /root/.hackathon/frontend/web
           git pull origin frontend
           ./deploy.sh
