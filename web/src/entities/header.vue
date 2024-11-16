@@ -1,39 +1,34 @@
 <template>
-  <div class="flex flex-row items-stretch h-14 w-full px-5 header-shadow z-10">
+  <div class="flex flex-row flex-shrink-0 items-stretch h-14 w-full px-5 z-10 text-slate-50 header-bg">
     <div class="h-full grid content-center mx-16">
-      <div class="font-semibold text-3xl cursor-pointer">SITELOGO</div>
+      <div class="font-semibold text-3xl cursor-pointer select-none" @click="$router.push({name: 'MainPage'})">Harmony Compass</div>
     </div>
-    <div class="h-full flex flex-row gap-x-2 flex-grow">
-      <div
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center border-bottom border-gray-500 hover:border-b-sky-500"
-      >
-        <a>Home</a>
+    <div class="h-full flex flex-row gap-x-4 flex-grow text-lg font-semibold">
+      <div 
+        @click="$router.push({name: 'TarotPage'})"
+        :class="{'border-b-sky-500' : headerStore.currentPage === 'TarotPage'}"
+        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none border-bottom border-gray-500 hover:border-b-sky-500">
+        <a>ТАРО</a>
       </div>
-      <div
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center border-bottom border-gray-500 hover:border-b-sky-500"
-      >
-        <a>About</a>
-      </div>
-      <div
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center border-bottom border-gray-500 hover:border-b-sky-500"
-      >
-        <a>Main</a>
-      </div>
-      <div
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center border-bottom border-gray-500 hover:border-b-sky-500"
-      >
-        <a>F.A.Q.</a>
+      <div 
+        @click="$router.push({name: 'CosmogrammPage'})"
+        :class="{'border-b-sky-500' : headerStore.currentPage === 'CosmogrammPage'}"
+        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none  border-bottom border-gray-500 hover:border-b-sky-500">
+        <a>КОСМОГРАММА</a>
       </div>
     </div>
-    <div class="flex flex-row gap-x-2 items-center mr-16">
-      <img
-        class="rounded-full w-10 h-10"
-        src="../assets/icons/user-avatar.png"
-      />
-      <div class="cursor-pointer">UserName</div>
+    <div class="flex flex-row gap-x-2 items-center mr-16 cursor-pointer" @click="$router.push({name: 'AccountPage'})">
+      <img class="w-10 h-10" src="../assets/icons/icon-profile.svg"/>
+      <div class="text-lg">UserName</div>
     </div>
   </div>
 </template>
 <script lang="ts">
-export default {};
+import { mapStores } from 'pinia';
+import { useHeaderStore } from '@/stores/headerStore';
+export default {
+  computed:{
+    ...mapStores(useHeaderStore),
+  },
+};
 </script>

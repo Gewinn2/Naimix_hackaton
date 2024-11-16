@@ -45,3 +45,18 @@ export function API_SignUp(data:IApiSignUpData){
     });
   });
 }
+
+//logout
+export function API_LogOut(){
+  return new Promise((resolve, reject) => {
+    axios.post(`${API}/logout`)
+    .then(response => {
+      if(DEVMODE) console.log('LogOut post success: ', response);
+      resolve(response);
+    })
+    .catch(error => {
+      if(DEVMODE) console.log('LogOut post error: ', error);
+      reject(error);
+    });
+  });
+}

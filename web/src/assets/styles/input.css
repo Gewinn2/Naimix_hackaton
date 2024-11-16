@@ -7,15 +7,18 @@
   height: 100svh;
   display: flex;
   flex-direction: column;
+  @apply main-bg;
+}
+*{
+  @apply text-slate-50;
 }
 
 .transition-input{
   transition: background-color .1s ease-out, color .1s ease-out, border-color .1s ease-out;
 }
 
-.border-bottom{
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
+.input-border{
+  @apply border border-solid border-gray-500
 }
 
 .bad-input{
@@ -27,6 +30,9 @@
 
 .header-shadow{
   box-shadow: 0 0 2px rgb(185, 185, 185), 0 0 5px rgb(204, 204, 204);
+}
+.header-bg{
+  background-color: #0E6666;
 }
 
 .login-shadow{
@@ -40,3 +46,27 @@
   @apply top-0 left-0 text-sm;
 }
 
+.main-bg{
+  background-color: #353535;
+}
+.orange-bg{
+  background-color: #353535;
+}
+.green-bg{
+  background-color: #353535;
+}
+
+section{
+  @apply w-full flex flex-col items-center p-2 border-b border-solid border-gray-300;
+}
+
+.btn{
+  @apply transition-colors select-none;
+  background-color: #0E6666;
+}
+.btn:hover{
+  background-color: #177979;
+}
+.btn:active{
+  background-color: #138a8a;
+}
