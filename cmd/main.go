@@ -18,7 +18,7 @@ import (
 // @BasePath /
 func main() {
 	if err := godotenv.Load("./.env"); err != nil {
-		log.Fatal("No .env file found")
+		log.Fatal("could not load .env configuration: " + err.Error())
 	}
 	conf := config.NewConfig()
 	log := logger.InitLogger(conf)

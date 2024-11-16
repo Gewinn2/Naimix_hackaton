@@ -142,6 +142,15 @@ definitions:
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
         type: string
     type: object
+<<<<<<< HEAD
+  entities.TaroCard:
+    properties:
+      direct_meaning:
+        type: string
+      id:
+        type: integer
+      reverse_meaning:
+=======
   entities.Planet:
     properties:
       abs_pos:
@@ -238,15 +247,7 @@ definitions:
       year:
         type: integer
       zodiac_type:
-        type: string
-    type: object
-  entities.TaroCard:
-    properties:
-      direct_meaning:
-        type: string
-      id:
-        type: integer
-      reverse_meaning:
+>>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
         type: string
     type: object
   entities.User:

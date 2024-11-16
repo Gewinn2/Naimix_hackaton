@@ -38,7 +38,7 @@ func (h *Handler) CreateCompany(c *fiber.Ctx) error {
 // @Success      200 {array}  entities.CompanyMemberInfo "List of company members"
 // @Failure      400 {object} entities.ErrorResponse
 // @Failure      500 {object} entities.ErrorResponse
-// @Router       /companies/{id}/members [get]
+// @Router       /company/{id}/members [get]
 func (h *Handler) GetCompanyMembers(c *fiber.Ctx) error {
 	companyIdString := c.Params("id")
 	companyId, err := strconv.Atoi(companyIdString)
