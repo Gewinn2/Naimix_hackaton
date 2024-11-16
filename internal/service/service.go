@@ -24,16 +24,19 @@ type Taro interface {
 
 // TODO Дополнить для других сервисов
 type Service struct {
-	UserService    *UserService
-	CompanyService *CompanyService
-	TaroService    *TaroService
-	conf           *config.Config
+	UserService      *UserService
+	CompanyService   *CompanyService
+	TaroService      *TaroService
+	conf             *config.Config
+	CosmogramService *CosmogramService
 }
 
 func NewService(repositories *repository.Repository, conf *config.Config) *Service {
 	return &Service{
-		UserService:    NewUserService(repositories.User, conf),
-		CompanyService: NewCompanyService(repositories.Company, repositories.CompanyMember),
-		TaroService:    NewTaroService(repositories.TaroCard),
+
+		UserService:      NewUserService(repositories.User, conf),
+		CompanyService:   NewCompanyService(repositories.Company, repositories.CompanyMember),
+		TaroService:      NewTaroService(repositories.TaroCard),
+		CosmogramService: NewCosmogramService(),
 	}
 }

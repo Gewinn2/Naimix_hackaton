@@ -51,7 +51,7 @@ services:
       - ./internal/log/grafana-provisioning/alerting:/etc/grafana/provisioning/alerting
     image: grafana/grafana
     ports:
-      - "3000:3000"
+      - "3011:3011"
     depends_on:
       - loki
     networks:
@@ -94,7 +94,7 @@ services:
       - ./.data/postgres/dump:/docker-entrypoint-initdb.d/db.sql
       - ./.data/postgres/pgdata:/var/lib/postgresql/data/pgdata
     ports:
-      - "${POSTGRESQL_PORT}:5432"
+      - "127.0.0.1:${POSTGRESQL_PORT}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRESQL_USER} -d ${POSTGRESQL_DB}"]
       interval: 10s
@@ -114,6 +114,6 @@ services:
       - ./.data/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - ./.data/redis/data:/data
     ports:
-      - "${REDIS_PORT}"
+      - "127.0.0.1:${REDIS_PORT}:6379"
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     restart: unless-stopped

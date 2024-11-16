@@ -1,5 +1,16 @@
 basePath: /
 definitions:
+  entities.Aspect:
+    properties:
+      aspect:
+        type: string
+      orbit:
+        type: number
+      p1_name:
+        type: string
+      p2_name:
+        type: string
+    type: object
   entities.CompanyMemberInfo:
     properties:
       name:
@@ -12,6 +23,32 @@ definitions:
         type: string
       user_id:
         type: integer
+    type: object
+  entities.CosmogramApiResponseBody:
+    properties:
+      aspects:
+        items:
+          $ref: '#/definitions/entities.Aspect'
+        type: array
+      data:
+        $ref: '#/definitions/entities.Data'
+      is_destiny_sign:
+        type: boolean
+      score:
+        type: integer
+      score_description:
+        type: string
+      status:
+        type: string
+    type: object
+  entities.CosmogramRequestBody:
+    properties:
+      candidate:
+        $ref: '#/definitions/entities.User'
+      staff:
+        items:
+          $ref: '#/definitions/entities.User'
+        type: array
     type: object
   entities.CreateCompanyRequest:
     properties:
@@ -65,6 +102,13 @@ definitions:
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
         type: string
     type: object
+  entities.Data:
+    properties:
+      first_subject:
+        $ref: '#/definitions/entities.Subject2'
+      second_subject:
+        $ref: '#/definitions/entities.Subject2'
+    type: object
   entities.ErrorResponse:
     properties:
       error:
@@ -98,6 +142,7 @@ definitions:
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
         type: string
     type: object
+<<<<<<< HEAD
   entities.TaroCard:
     properties:
       direct_meaning:
@@ -105,6 +150,104 @@ definitions:
       id:
         type: integer
       reverse_meaning:
+=======
+  entities.Planet:
+    properties:
+      abs_pos:
+        type: number
+      element:
+        type: string
+      emoji:
+        type: string
+      house:
+        type: string
+      name:
+        type: string
+      point_type:
+        type: string
+      position:
+        type: number
+      quality:
+        type: string
+      retrograde:
+        type: boolean
+      sign:
+        type: string
+      sign_num:
+        type: integer
+    type: object
+  entities.Subject2:
+    properties:
+      chiron:
+        $ref: '#/definitions/entities.Planet'
+      city:
+        type: string
+      day:
+        type: integer
+      hour:
+        type: integer
+      houses_system_identifier:
+        type: string
+      houses_system_name:
+        type: string
+      iso_formatted_local_datetime:
+        type: string
+      iso_formatted_utc_datetime:
+        type: string
+      julian_day:
+        type: number
+      jupiter:
+        $ref: '#/definitions/entities.Planet'
+      lat:
+        type: number
+      lng:
+        type: number
+      local_time:
+        type: number
+      mars:
+        $ref: '#/definitions/entities.Planet'
+      mean_lilith:
+        $ref: '#/definitions/entities.Planet'
+      mean_node:
+        $ref: '#/definitions/entities.Planet'
+      mean_south_node:
+        $ref: '#/definitions/entities.Planet'
+      mercury:
+        $ref: '#/definitions/entities.Planet'
+      minute:
+        type: integer
+      month:
+        type: integer
+      moon:
+        $ref: '#/definitions/entities.Planet'
+      name:
+        type: string
+      nation:
+        type: string
+      neptune:
+        $ref: '#/definitions/entities.Planet'
+      perspective_type:
+        type: string
+      pluto:
+        $ref: '#/definitions/entities.Planet'
+      saturn:
+        $ref: '#/definitions/entities.Planet'
+      sidereal_mode:
+        type: string
+      sun:
+        $ref: '#/definitions/entities.Planet'
+      tz_str:
+        type: string
+      uranus:
+        $ref: '#/definitions/entities.Planet'
+      utc_time:
+        type: number
+      venus:
+        $ref: '#/definitions/entities.Planet'
+      year:
+        type: integer
+      zodiac_type:
+>>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
         type: string
     type: object
   entities.User:
@@ -201,6 +344,35 @@ paths:
       summary: Create a new company
       tags:
       - company
+  /cosmogram:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Get cosmogram data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.CosmogramRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.CosmogramApiResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Get cosmogram
+      tags:
+      - cosmogram
   /login:
     post:
       consumes:

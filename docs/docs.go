@@ -106,6 +106,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/cosmogram": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cosmogram"
+                ],
+                "summary": "Get cosmogram",
+                "parameters": [
+                    {
+                        "description": "Get cosmogram data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.CosmogramRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.CosmogramApiResponseBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "consumes": [
@@ -275,6 +320,23 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "entities.Aspect": {
+            "type": "object",
+            "properties": {
+                "aspect": {
+                    "type": "string"
+                },
+                "orbit": {
+                    "type": "number"
+                },
+                "p1_name": {
+                    "type": "string"
+                },
+                "p2_name": {
+                    "type": "string"
+                }
+            }
+        },
         "entities.CompanyMemberInfo": {
             "type": "object",
             "properties": {
@@ -292,6 +354,46 @@ const docTemplate = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "entities.CosmogramApiResponseBody": {
+            "type": "object",
+            "properties": {
+                "aspects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entities.Aspect"
+                    }
+                },
+                "data": {
+                    "$ref": "#/definitions/entities.Data"
+                },
+                "is_destiny_sign": {
+                    "type": "boolean"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "score_description": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.CosmogramRequestBody": {
+            "type": "object",
+            "properties": {
+                "candidate": {
+                    "$ref": "#/definitions/entities.User"
+                },
+                "staff": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entities.User"
+                    }
                 }
             }
         },
@@ -369,6 +471,17 @@ const docTemplate = `{
                 }
             }
         },
+        "entities.Data": {
+            "type": "object",
+            "properties": {
+                "first_subject": {
+                    "$ref": "#/definitions/entities.Subject2"
+                },
+                "second_subject": {
+                    "$ref": "#/definitions/entities.Subject2"
+                }
+            }
+        },
         "entities.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -416,6 +529,7 @@ const docTemplate = `{
                 }
             }
         },
+<<<<<<< HEAD
         "entities.TaroCard": {
             "type": "object",
             "properties": {
@@ -426,6 +540,152 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "reverse_meaning": {
+=======
+        "entities.Planet": {
+            "type": "object",
+            "properties": {
+                "abs_pos": {
+                    "type": "number"
+                },
+                "element": {
+                    "type": "string"
+                },
+                "emoji": {
+                    "type": "string"
+                },
+                "house": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "point_type": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "number"
+                },
+                "quality": {
+                    "type": "string"
+                },
+                "retrograde": {
+                    "type": "boolean"
+                },
+                "sign": {
+                    "type": "string"
+                },
+                "sign_num": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entities.Subject2": {
+            "type": "object",
+            "properties": {
+                "chiron": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "day": {
+                    "type": "integer"
+                },
+                "hour": {
+                    "type": "integer"
+                },
+                "houses_system_identifier": {
+                    "type": "string"
+                },
+                "houses_system_name": {
+                    "type": "string"
+                },
+                "iso_formatted_local_datetime": {
+                    "type": "string"
+                },
+                "iso_formatted_utc_datetime": {
+                    "type": "string"
+                },
+                "julian_day": {
+                    "type": "number"
+                },
+                "jupiter": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lng": {
+                    "type": "number"
+                },
+                "local_time": {
+                    "type": "number"
+                },
+                "mars": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "mean_lilith": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "mean_node": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "mean_south_node": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "mercury": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "minute": {
+                    "type": "integer"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "moon": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nation": {
+                    "type": "string"
+                },
+                "neptune": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "perspective_type": {
+                    "type": "string"
+                },
+                "pluto": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "saturn": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "sidereal_mode": {
+                    "type": "string"
+                },
+                "sun": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "tz_str": {
+                    "type": "string"
+                },
+                "uranus": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "utc_time": {
+                    "type": "number"
+                },
+                "venus": {
+                    "$ref": "#/definitions/entities.Planet"
+                },
+                "year": {
+                    "type": "integer"
+                },
+                "zodiac_type": {
+>>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
                     "type": "string"
                 }
             }
