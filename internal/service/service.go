@@ -20,14 +20,16 @@ type Company interface {
 
 // TODO Дополнить для других сервисов
 type Service struct {
-	UserService    *UserService
-	CompanyService *CompanyService
-	conf           *config.Config
+	UserService      *UserService
+	CompanyService   *CompanyService
+	CosmogramService *CosmogramService
+	conf             *config.Config
 }
 
 func NewService(repositories *repository.Repository, conf *config.Config) *Service {
 	return &Service{
-		UserService:    NewUserService(repositories.User, conf),
-		CompanyService: NewCompanyService(repositories.Company, repositories.CompanyMember),
+		UserService:      NewUserService(repositories.User, conf),
+		CompanyService:   NewCompanyService(repositories.Company, repositories.CompanyMember),
+		CosmogramService: NewCosmogramService(),
 	}
 }
