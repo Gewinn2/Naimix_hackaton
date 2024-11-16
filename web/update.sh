@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-exec > /root/.hackathon/frontend/frontend_updater.log 2>&1
+exec > /root/.hackaton/frontend/frontend_updater.log 2>&1
 set -x
 
 LOCKFILE="/tmp/frontend_updater.lock"
@@ -15,7 +15,7 @@ fi
 touch "$LOCKFILE"
 
 # Переход в директорию проекта
-cd /root/.hackathon/frontend/web || exit 1
+cd /root/.hackaton/frontend/web || exit 1
 
 # Проверка на git репозиторий
 if ! /usr/bin/git rev-parse --show-toplevel > /dev/null 2>&1; then
