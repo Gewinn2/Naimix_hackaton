@@ -55,8 +55,20 @@
 .orange-bg{
   background-color: #F25430;
 }
+.orange-text{
+  color: #F25430;
+}
 .green-bg{
   background-color: #0E6666;
+}
+
+.bg-ellipse{
+  background-image: url('../icons/bg-ellipse-2.svg');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center center;
+  width: 807px;
+  height: 345px;
 }
 
 section{
