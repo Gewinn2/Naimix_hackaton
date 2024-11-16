@@ -19,10 +19,10 @@
       </div>
       <div class="flex flex-col w-full items-center gap-y-10 my-20">
         <div class="flex flex-row relative w-[1396px] h-64">
-          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute transition-all hover:-top-4" src="../assets/cards/back.png"/>
+          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute card-animation" src="../assets/cards/back.png"/>
         </div>
         <div class="flex flex-row relative w-[1396px] h-64">
-          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute transition-all hover:-top-4" src="../assets/cards/back.png"/>
+          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute card-animation" src="../assets/cards/back.png"/>
         </div>
       </div>
     </div>

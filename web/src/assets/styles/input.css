@@ -85,3 +85,10 @@ section{
 .btn:active{
   background-color: #138a8a;
 }
+
+.card-animation{
+  transition: transform 50ms ease-out;
+}
+.card-animation:hover{
+  transform: translateY(-20px);
+}

@@ -628,10 +628,6 @@ video {
   margin-top: 0.5rem;
 }
 
-.mt-20 {
-  margin-top: 5rem;
-}
-
 .mt-32 {
   margin-top: 8rem;
 }
@@ -736,16 +732,16 @@ video {
   width: 24rem;
 }
 
+.w-\[1396px\] {
+  width: 1396px;
+}
+
 .w-full {
   width: 100%;
 }
 
 .w-svw {
   width: 100svw;
-}
-
-.w-\[1396px\] {
-  width: 1396px;
 }
 
 .min-w-0 {
@@ -878,10 +874,6 @@ video {
 
 .gap-y-6 {
   row-gap: 1.5rem;
-}
-
-.gap-y-72 {
-  row-gap: 18rem;
 }
 
 .gap-y-8 {
@@ -1286,8 +1278,12 @@ section {
   background-color: #138a8a;
 }
 
-.hover\:-top-4:hover {
-  top: -1rem;
+.card-animation{
+  transition: transform 50ms ease-out;
+}
+
+.card-animation:hover{
+  transform: translateY(-20px);
 }
 
 .hover\:border-sky-500:hover {
