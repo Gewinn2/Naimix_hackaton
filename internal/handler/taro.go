@@ -8,7 +8,7 @@ import (
 
 // GetTaroCard
 // @Tags tarot
-// @Summary      Get a tarot card by ID
+// @Summary      Get a tarot card by category ID
 // @Accept       json
 // @Produce      json
 // @Param        id   path     int true "Tarot card ID"
@@ -27,7 +27,7 @@ func (h *Handler) GetTaroCard(c *fiber.Ctx) error {
 	}
 
 	h.logger.Debug().Msg("call h.services.TaroService.GetById")
-	card, err := h.services.TaroService.GetById(c.Context(), CategoryID)
+	card, err := h.services.TaroService.GetCard(c.Context(), CategoryID)
 	if err != nil {
 		logEvent := log.CreateLog(h.logger, log.LogsField{Level: "Error", Method: c.Method(),
 			Url: c.OriginalURL(), Status: fiber.StatusInternalServerError})

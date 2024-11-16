@@ -3,6 +3,7 @@ package taro
 import (
 	"context"
 	"log"
+	"math/rand"
 	"server/internal/entities"
 	"server/internal/repository"
 	"time"
@@ -20,14 +21,16 @@ func NewTaroService(repository repository.TaroCardRepository) *TaroService {
 	}
 }
 
-func (s *TaroService) GetById(c context.Context, id int) ([]entities.TaroCard, error) {
+func (s *TaroService) GetCard(c context.Context, id int) (*entities.TaroCard, error) {
 	ctx, cancel := context.WithTimeout(c, s.timeout)
 	defer cancel()
-	card, err := s.repository.GetCardsByCategoryID(ctx, id)
+	cards, err := s.repository.GetCardsByCategoryID(ctx, id)
 	if err != nil {
 		log.Printf("Error fetching card from repository: %v", err)
 		return nil, err
 	}
-	return card, nil
-
+	randomSource := rand.NewSource(time.Now().UnixNano())
+	random := rand.New(randomSource)
+	randomIndex := random.Intn(len(cards))
+	return &cards[randomIndex], nil
 }

@@ -1,4 +1,4 @@
-CREATE TABLE company_members (
+CREATE TABLE IF NOT EXISTS company_members (
     user_id INT NOT NULL,
     company_id INT NOT NULL,
     position VARCHAR NOT NULL,
