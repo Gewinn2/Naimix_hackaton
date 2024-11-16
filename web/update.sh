@@ -2,42 +2,37 @@
 
 set -e
 
-LOCKFILE="/tmp/frontend_updater.lock"
-
-if [ -f "$LOCKFILE" ]; then
-  echo "another instance is running!"
-  exit 1
-fi
+LOCKFILE="/tmp/backend_updater.lock"
 
 trap "rm -f $LOCKFILE; exit" INT TERM EXIT
+if [ -f "$LOCKFILE" ]; then
+  echo "Another instance is running!"
+  exit 1
+fi
 touch "$LOCKFILE"
 
-if [ ! -d ".git" ]; then
-  echo "${pwd} is not a git-repository dir"
+if ! git rev-parse --show-toplevel > /dev/null 2>&1; then
+  echo "$(pwd) is not a git-repository dir"
   rm -f "$LOCKFILE"
   exit 1
 fi
 
-git fetch origin
+if ! git fetch origin; then
+  echo "Failed to fetch from origin"
+  rm -f "$LOCKFILE"
+  exit 1
+fi
 
 LOCAL=$(git rev-parse HEAD)
 REMOTE=$(git rev-parse @{u})
 
 if [ "$LOCAL" != "$REMOTE" ]; then
-  echo "found update!"
-
-  git stash
-
-  git pull
-
+  git stash push -q --include-untracked || true
+  git pull --rebase
 
   if [ -x "./deploy.sh" ]; then
-    echo "deploying..."
     ./deploy.sh
-  else
-    echo "deploy.sh not found/not executable"
   fi
-else
 fi
 
 rm -f "$LOCKFILE"
