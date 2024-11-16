@@ -23,4 +23,6 @@ COPY --from=builder /app/.env /app/.env
 
 WORKDIR /app
 
+EXPOSE 8080
+
 ENTRYPOINT ["/bin/main"]
