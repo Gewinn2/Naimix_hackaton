@@ -1,10 +1,10 @@
 #!/bin/bash
 
 set -e
-exec > /root/.hackathon/frontend/backend_updater.log 2>&1
+exec > /root/.hackathon/frontend/frontend_updater.log 2>&1
 set -x
 
-LOCKFILE="/tmp/backend_updater.lock"
+LOCKFILE="/tmp/frontend_updater.lock"
 trap "rm -f $LOCKFILE; exit" INT TERM EXIT
 
 if [ -f "$LOCKFILE" ]; then
