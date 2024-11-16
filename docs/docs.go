@@ -529,18 +529,6 @@ const docTemplate = `{
                 }
             }
         },
-<<<<<<< HEAD
-        "entities.TaroCard": {
-            "type": "object",
-            "properties": {
-                "direct_meaning": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "reverse_meaning": {
-=======
         "entities.Planet": {
             "type": "object",
             "properties": {
@@ -685,7 +673,20 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "zodiac_type": {
->>>>>>> 8c51950ffbe0fe76694f0ab70623b52b48f2ac05
+                    "type": "string"
+                }
+            }
+        },
+        "entities.TaroCard": {
+            "type": "object",
+            "properties": {
+                "direct_meaning": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "reverse_meaning": {
                     "type": "string"
                 }
             }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 	"server/internal/entities"
 	"server/internal/repository"
 	"time"
@@ -23,9 +24,12 @@ func (s *TaroService) GetById(c context.Context, id int) (*entities.TaroCard, er
 	ctx, cancel := context.WithTimeout(c, s.timeout)
 	defer cancel()
 
+	log.Println("Calling repository to get Taro card")
 	card, err := s.repository.GetById(ctx, id)
 	if err != nil {
+		log.Printf("Error fetching card from repository: %v", err)
 		return nil, err
 	}
 	return card, nil
+
 }
