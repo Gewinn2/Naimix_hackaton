@@ -153,5 +153,5 @@ export const TAROT_CARDS = [
 
 export function GET_CARD_IMAGE(cardID: number):string {
   const arcanaFolder = (cardID < 22) ? 'majorArcana' : 'minorArcana';
-  return `/assets/cards/${arcanaFolder}/${TAROT_CARDS[cardID]}.png`;
+  return `${arcanaFolder}/${TAROT_CARDS[cardID]}.png`;
 };

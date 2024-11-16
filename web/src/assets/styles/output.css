@@ -652,8 +652,16 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .aspect-auto {
   aspect-ratio: auto;
+}
+
+.h-0 {
+  height: 0px;
 }
 
 .h-10 {
@@ -694,6 +702,10 @@ video {
 
 .max-h-\[600px\] {
   max-height: 600px;
+}
+
+.w-0 {
+  width: 0px;
 }
 
 .w-10 {
