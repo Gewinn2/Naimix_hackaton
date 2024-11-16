@@ -43,6 +43,33 @@ WHERE email=$1 OR phone_number=$2`
 
 }
 
+func (r *UserRepository) GetAll(ctx context.Context) ([]entities.User, error) {
+	query := `
+		SELECT id, name, third_name, surname, email, password, phone_number, birth_date, role
+		FROM users
+	`
+
+	rows, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	users := []entities.User{}
+	for rows.Next() {
+		user := entities.User{}
+		err := rows.Scan(&user.ID, &user.Name, &user.ThirdName, &user.Surname, &user.Email,
+			&user.PhoneNumber, &user.BirthDate, &user.Role)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 func (r *UserRepository) Exists(ctx context.Context, phoneNumber string, email string) (bool, error) {
 	var count int
 	query := "SELECT COUNT(1) FROM users WHERE phone_number=$1 AND email=$2"

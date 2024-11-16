@@ -1,5 +1,28 @@
 basePath: /
 definitions:
+  entities.CompanyMemberInfo:
+    properties:
+      name:
+        type: string
+      position:
+        type: integer
+      surname:
+        type: string
+      third_name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  entities.CreateCompanyRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  entities.CreateCompanyResponse:
+    properties:
+      id:
+        type: integer
+    type: object
   entities.CreateUserRequest:
     properties:
       birth_date:
@@ -75,11 +98,100 @@ definitions:
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
         type: string
     type: object
+  entities.User:
+    properties:
+      birth_date:
+        example: "1990-01-01"
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John
+        type: string
+      password:
+        example: P@ssw0rd123
+        type: string
+      phone_number:
+        example: "+1234567890"
+        type: string
+      role:
+        example: user
+        type: string
+      surname:
+        example: Doe
+        type: string
+      third_name:
+        example: Petrovich
+        type: string
+    type: object
 info:
   contact: {}
   title: Harmony Compass API
   version: "1.0"
 paths:
+  /companies/{id}/members:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of company members
+          schema:
+            items:
+              $ref: '#/definitions/entities.CompanyMemberInfo'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Get members of a company by ID
+      tags:
+      - company
+  /company/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Company creation request data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.CreateCompanyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entities.CreateCompanyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Create a new company
+      tags:
+      - company
   /login:
     post:
       consumes:
@@ -136,6 +248,28 @@ paths:
           schema:
             $ref: '#/definitions/entities.ErrorResponse'
       summary: Sign up user
+      tags:
+      - user
+  /users:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            additionalProperties:
+              items:
+                $ref: '#/definitions/entities.User'
+              type: array
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entities.ErrorResponse'
+      summary: Get all users
       tags:
       - user
 swagger: "2.0"

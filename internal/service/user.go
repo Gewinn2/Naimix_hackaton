@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"server/internal/config"
 	"server/internal/entities"
 	"server/internal/repository"
@@ -117,4 +118,16 @@ func (s *UserService) Login(c context.Context, request *entities.LoginUserReques
 		Email:        u.Email,
 		ID:           u.ID,
 	}, nil
+}
+
+func (s *UserService) GetAll(ctx context.Context) ([]entities.User, error) {
+	ctx, cancel := context.WithTimeout(ctx, s.timeout)
+	defer cancel()
+
+	users, err := s.repository.GetAll(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("error getting all users: %w", err)
+	}
+
+	return users, nil
 }

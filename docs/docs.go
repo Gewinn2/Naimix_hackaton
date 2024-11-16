@@ -15,6 +15,97 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/companies/{id}/members": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "Get members of a company by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Company ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of company members",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entities.CompanyMemberInfo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/company/create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "Create a new company",
+                "parameters": [
+                    {
+                        "description": "Company creation request data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.CreateCompanyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/entities.CreateCompanyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "consumes": [
@@ -104,9 +195,79 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "List of users",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/entities.User"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entities.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "entities.CompanyMemberInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "integer"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "third_name": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entities.CreateCompanyRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.CreateCompanyResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "entities.CreateUserRequest": {
             "type": "object",
             "properties": {
@@ -209,6 +370,47 @@ const docTemplate = `{
                 "refresh_token": {
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY"
+                }
+            }
+        },
+        "entities.User": {
+            "type": "object",
+            "properties": {
+                "birth_date": {
+                    "type": "string",
+                    "example": "1990-01-01"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "P@ssw0rd123"
+                },
+                "phone_number": {
+                    "type": "string",
+                    "example": "+1234567890"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "user"
+                },
+                "surname": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "third_name": {
+                    "type": "string",
+                    "example": "Petrovich"
                 }
             }
         }

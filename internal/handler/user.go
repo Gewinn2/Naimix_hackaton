@@ -119,3 +119,20 @@ func (h *Handler) Login(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(u)
 
 }
+
+// GetAllUsers
+// @Tags user
+// @Summary      Get all users
+// @Accept       json
+// @Produce      json
+// @Success      200 {object} map[string][]entities.User "List of users"
+// @Failure      500 {object} entities.ErrorResponse
+// @Router       /users [get]
+func (h *Handler) GetAllUsers(c *fiber.Ctx) error {
+	h.logger.Debug().Msg("call h.services.UserService.GetAll")
+	users, err := h.services.UserService.GetAll(c.Context())
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"users": users})
+}
