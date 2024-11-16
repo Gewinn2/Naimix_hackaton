@@ -13,10 +13,26 @@ definitions:
       user_id:
         type: integer
     type: object
-  entities.CosmogramApiResponseBody:
+  entities.Compatibility:
     properties:
-      data:
-        $ref: '#/definitions/entities.Data'
+      candidate_full_name:
+        example: Doe John Petrovich
+        type: string
+      communication:
+        type: integer
+      communication_comment:
+        type: string
+      emotions:
+        type: integer
+      emotions_comment:
+        type: string
+      employee_full_name:
+        example: Doe John Petrovich
+        type: string
+      work:
+        type: integer
+      work_comment:
+        type: string
     type: object
   entities.CosmogramRequestBody:
     properties:
@@ -26,6 +42,15 @@ definitions:
         items:
           $ref: '#/definitions/entities.EmployeeRequest'
         type: array
+    type: object
+  entities.CosmogramResponseBody:
+    properties:
+      compatibilities:
+        items:
+          $ref: '#/definitions/entities.Compatibility'
+        type: array
+      cosmogram:
+        $ref: '#/definitions/entities.Subject2'
     type: object
   entities.CreateCompanyRequest:
     properties:
@@ -78,13 +103,6 @@ definitions:
       refresh_token:
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY
         type: string
-    type: object
-  entities.Data:
-    properties:
-      first_subject:
-        $ref: '#/definitions/entities.Subject2'
-      second_subject:
-        $ref: '#/definitions/entities.Subject2'
     type: object
   entities.EmployeeRequest:
     properties:
@@ -314,7 +332,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entities.CosmogramApiResponseBody'
+            $ref: '#/definitions/entities.CosmogramResponseBody'
         "400":
           description: Bad Request
           schema:

@@ -12,7 +12,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param data body entities.CosmogramRequestBody true "Get cosmogram data"
-// @Success 200 {object} entities.CosmogramApiResponseBody
+// @Success 200 {object} entities.CosmogramResponseBody
 // @Failure 400 {object} entities.ErrorResponse
 // @Failure 500 {object} entities.ErrorResponse
 // @Router       /cosmogram [post]

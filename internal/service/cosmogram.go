@@ -24,7 +24,7 @@ func NewCosmogramService() *CosmogramService {
 	}
 }
 
-func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBody) ([]entities.CosmogramResponseBody, error) {
+func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBody) (*entities.CosmogramResponseBody, error) {
 	year, month, day, err := util.BirthDateParser(cosmogramRequestBody.Candidate.BirthDate)
 	if err != nil {
 		return nil, err
@@ -65,7 +65,8 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 		staff = append(staff, employee)
 	}
 
-	var responses []entities.CosmogramResponseBody
+	var compatibilities []entities.Compatibility
+	var cosmogram entities.Subject2
 	for i := range staff {
 		requestBody := entities.CosmogramApiRequestBody{
 			FirstSubject:  candidate,
@@ -112,18 +113,26 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 
 		aspects := ComparePlanets(apiResponse.Data.FirstSubject, apiResponse.Data.SecondSubject)
 		scores := EvaluateCategory(aspects)
-		var response entities.CosmogramResponseBody
-		response.FullName = apiResponse.Data.FirstSubject.Name
-		response.Communication = scores["Communication"]
-		response.CommunicationComment = AddCommentToCommunication(scores["Communication"])
-		response.Emotions = scores["Emotions"]
-		response.EmotionsComment = AddCommentToEmotions(scores["Emotions"])
-		response.Work = scores["Work"]
-		response.WorkComment = AddCommentToWork(scores["Work"])
-		responses = append(responses, response)
+		var compatibility entities.Compatibility
+		compatibility.CandidateFullName = candidate.Name
+		compatibility.EmployeeFullName = staff[i].Name
+		compatibility.Communication = scores["Communication"]
+		compatibility.CommunicationComment = AddCommentToCommunication(scores["Communication"])
+		compatibility.Emotions = scores["Emotions"]
+		compatibility.EmotionsComment = AddCommentToEmotions(scores["Emotions"])
+		compatibility.Work = scores["Work"]
+		compatibility.WorkComment = AddCommentToWork(scores["Work"])
+		compatibilities = append(compatibilities, compatibility)
+
+		cosmogram = apiResponse.Data.FirstSubject
+
 		resp.Body.Close()
 	}
-	return responses, nil
+
+	var response entities.CosmogramResponseBody
+	response.Compatibilities = compatibilities
+	response.Cosmogram = cosmogram
+	return &response, nil
 }
 
 func EvaluateCategory(aspects map[string][]string) map[string]int {
@@ -252,9 +261,9 @@ func AddCommentToCommunication(value int) string {
 }
 
 func AddCommentToEmotions(value int) string {
-	comment := "Ваши эмоциональные связи невероятно крепки. Вы чувствуете друг друга на интуитивном уровне и можете поддерживать друг друга в любых ситуациях. Это создает глубокую привязанность и понимание."
+	comment := ""
 	if value == 100 {
-		comment = ""
+		comment = "Ваши эмоциональные связи невероятно крепки. Вы чувствуете друг друга на интуитивном уровне и можете поддерживать друг друга в любых ситуациях. Это создает глубокую привязанность и понимание."
 	} else if value == 90 {
 		comment = "Ваши эмоциональные реакции гармонично сочетаются. Вы способны поддерживать друг друга и находить общий язык в сложных ситуациях. Это создает атмосферу доверия и спокойствия в ваших отношениях."
 	} else if value == 50 {

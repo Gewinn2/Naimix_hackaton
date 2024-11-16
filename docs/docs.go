@@ -133,7 +133,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.CosmogramApiResponseBody"
+                            "$ref": "#/definitions/entities.CosmogramResponseBody"
                         }
                     },
                     "400": {
@@ -340,11 +340,34 @@ const docTemplate = `{
                 }
             }
         },
-        "entities.CosmogramApiResponseBody": {
+        "entities.Compatibility": {
             "type": "object",
             "properties": {
-                "data": {
-                    "$ref": "#/definitions/entities.Data"
+                "candidate_full_name": {
+                    "type": "string",
+                    "example": "Doe John Petrovich"
+                },
+                "communication": {
+                    "type": "integer"
+                },
+                "communication_comment": {
+                    "type": "string"
+                },
+                "emotions": {
+                    "type": "integer"
+                },
+                "emotions_comment": {
+                    "type": "string"
+                },
+                "employee_full_name": {
+                    "type": "string",
+                    "example": "Doe John Petrovich"
+                },
+                "work": {
+                    "type": "integer"
+                },
+                "work_comment": {
+                    "type": "string"
                 }
             }
         },
@@ -359,6 +382,20 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/entities.EmployeeRequest"
                     }
+                }
+            }
+        },
+        "entities.CosmogramResponseBody": {
+            "type": "object",
+            "properties": {
+                "compatibilities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entities.Compatibility"
+                    }
+                },
+                "cosmogram": {
+                    "$ref": "#/definitions/entities.Subject2"
                 }
             }
         },
@@ -433,17 +470,6 @@ const docTemplate = `{
                 "refresh_token": {
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiRXhwaXJlc0F0IjoxNzM0MzAwNjM0LCJJc3N1ZWRBciI6MTczMTY5NDIzNH0sInVzZXJfaWQiOjJ9.o9i-1GBcLtUR0SpDNiBuHfzQWHBt465bhxcC_X2WqBY"
-                }
-            }
-        },
-        "entities.Data": {
-            "type": "object",
-            "properties": {
-                "first_subject": {
-                    "$ref": "#/definitions/entities.Subject2"
-                },
-                "second_subject": {
-                    "$ref": "#/definitions/entities.Subject2"
                 }
             }
         },
