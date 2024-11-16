@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-shrink-0 items-stretch h-14 w-full px-5 z-40 text-slate-50 header-bg">
+  <div class="flex flex-row flex-shrink-0 items-stretch h-14 w-full px-5 z-40 header-bg">
     <div class="h-full grid content-center mx-16">
       <div class="font-semibold text-3xl cursor-pointer select-none" @click="$router.push({name: 'MainPage'})">Harmony Compass</div>
     </div>
@@ -7,13 +7,13 @@
       <div 
         @click="$router.push({name: 'TarotPage'})"
         :class="{'border-b-sky-500' : headerStore.currentPage === 'TarotPage'}"
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none border-bottom border-gray-500 hover:border-b-sky-500">
+        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none border-bottom-header border-gray-500 hover:border-b-sky-500">
         <a>ТАРО</a>
       </div>
       <div 
         @click="$router.push({name: 'CosmogrammPage'})"
         :class="{'border-b-sky-500' : headerStore.currentPage === 'CosmogrammPage'}"
-        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none  border-bottom border-gray-500 hover:border-b-sky-500">
+        class="h-full min-w-16 grid cursor-pointer justify-center content-center select-none border-bottom-header border-gray-500 hover:border-b-sky-500">
         <a>КОСМОГРАММА</a>
       </div>
     </div>

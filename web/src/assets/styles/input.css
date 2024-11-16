@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 #app{
-  width: 100svw;
   height: 100svh;
   display: flex;
   flex-direction: column;
@@ -21,6 +20,9 @@
   @apply border border-solid border-gray-500
 }
 .border-bottom{
+  @apply border-b-2 border-solid;
+}
+.border-bottom-header{
   @apply border-b-4 border-solid;
 }
 

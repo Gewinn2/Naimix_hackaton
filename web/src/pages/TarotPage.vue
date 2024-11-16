@@ -1,5 +1,5 @@
 <template>
-  <div class="w-svw flex-grow flex flex-col items-center main-bg">
+  <div class="w-full flex-grow flex flex-col items-center main-bg">
     <div class="absolute z-10 -top-24 bg-ellipse flex flex-col justify-end items-center">
       <div class="mb-20 text-4xl text-center font-semibold w-full">
         Узнай, что тебя ждёт с помощью <br> Таро-расклада!
