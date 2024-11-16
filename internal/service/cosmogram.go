@@ -37,9 +37,11 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 	candidate.Longitude = 37.6156
 	candidate.Latitude = 55.7522
 	candidate.City = "Moscow"
-	candidate.Nation = "RUS"
+	candidate.Nation = "RU"
 	candidate.Timezone = "Europe/Moscow"
 	candidate.ZodiacType = "Tropic"
+
+	fmt.Println(candidate)
 
 	var staff []entities.Subject
 	for i := range cosmogramRequestBody.Staff {
@@ -57,16 +59,22 @@ func (c *CosmogramService) Get(cosmogramRequestBody entities.CosmogramRequestBod
 		personal.Longitude = 37.6156
 		personal.Latitude = 55.7522
 		personal.City = "Moscow"
-		personal.Nation = "RUS"
+		personal.Nation = "RU"
 		personal.Timezone = "Europe/Moscow"
 		personal.ZodiacType = "Tropic"
 		staff = append(staff, personal)
+
+		fmt.Println(personal)
 	}
 
 	var responses []entities.CosmogramApiResponseBody
 	for i := range staff {
+		requestBody := entities.CosmogramApiRequestBody{
+			FirstSubject:  candidate,
+			SecondSubject: staff[i],
+		}
 		// Преобразуем тело в JSON
-		jsonData, err := json.Marshal(staff[i])
+		jsonData, err := json.Marshal(requestBody)
 		if err != nil {
 			return nil, errors.New(fmt.Sprintf("Ошибка при маршаллинге данных: %v", err))
 		}
