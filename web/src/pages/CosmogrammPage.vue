@@ -1,6 +1,11 @@
 <template>
   <div class="w-full h-full flex flex-col items-center overflow-y-scroll">
-    <div class="w-10/12 h-full flex flex-col">
+    <div class="absolute z-10 -top-24">
+      <svg width="900" height="400" viewBox="0 0 807 345" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="350" cy="76" rx="350" ry="269" fill="#F25430"/>
+      </svg>
+    </div>
+    <div class="w-10/12 h-full flex flex-col z-20">
       <section>
         <UserList 
           class="w-full mb-2"

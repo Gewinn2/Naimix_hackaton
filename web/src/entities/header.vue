@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-shrink-0 items-stretch h-14 w-full px-5 z-10 text-slate-50 header-bg">
+  <div class="flex flex-row flex-shrink-0 items-stretch h-14 w-full px-5 z-40 text-slate-50 header-bg">
     <div class="h-full grid content-center mx-16">
       <div class="font-semibold text-3xl cursor-pointer select-none" @click="$router.push({name: 'MainPage'})">Harmony Compass</div>
     </div>

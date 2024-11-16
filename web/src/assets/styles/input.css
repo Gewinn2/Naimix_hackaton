@@ -20,6 +20,9 @@
 .input-border{
   @apply border border-solid border-gray-500
 }
+.border-bottom{
+  @apply border-b-4 border-solid;
+}
 
 .bad-input{
   border-color: rgb(220, 38, 38) !important;
@@ -50,10 +53,10 @@
   background-color: #353535;
 }
 .orange-bg{
-  background-color: #353535;
+  background-color: #F25430;
 }
 .green-bg{
-  background-color: #353535;
+  background-color: #0E6666;
 }
 
 section{

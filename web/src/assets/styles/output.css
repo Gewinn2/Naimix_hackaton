@@ -562,12 +562,24 @@ video {
   position: relative;
 }
 
+.-top-24 {
+  top: -6rem;
+}
+
 .top-16 {
   top: 4rem;
 }
 
 .z-10 {
   z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.z-40 {
+  z-index: 40;
 }
 
 .z-50 {
@@ -1122,6 +1134,11 @@ video {
   border-color: rgb(107 114 128 / var(--tw-border-opacity, 1));
 }
 
+.border-bottom {
+  border-bottom-width: 4px;
+  border-style: solid;
+}
+
 .bad-input{
   border-color: rgb(220, 38, 38) !important;
 }
@@ -1161,11 +1178,11 @@ video {
 }
 
 .orange-bg{
-  background-color: #353535;
+  background-color: #F25430;
 }
 
 .green-bg{
-  background-color: #353535;
+  background-color: #0E6666;
 }
 
 section {
