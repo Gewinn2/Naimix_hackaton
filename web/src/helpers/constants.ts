@@ -42,6 +42,16 @@ export interface IUsersList{
   isChoosed: boolean,
 }
 
+export interface IPickCard{
+  isPicked: boolean,
+};
+
+export interface ICard{
+  direct_meaning: string,
+  reverse_meaning: string,
+  id: number,
+};
+
 //enums
 
 export enum StatusCodes {

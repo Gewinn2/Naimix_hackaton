@@ -87,10 +87,13 @@ section{
 .btn:active{
   background-color: #138a8a;
 }
+.btn-disabled{
+  background-color: #6a6d6d;
+}
 
 .card-animation{
   transition: transform 50ms ease-out;
 }
-.card-animation:hover{
+.card-animation:hover, .card-picked{
   transform: translateY(-20px);
 }

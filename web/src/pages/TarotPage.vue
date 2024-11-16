@@ -12,27 +12,93 @@
         </svg>
         <p class="text-4xl font-semibold">Таро</p>
       </div>
-      <div class="flex flex-col self-start text-2xl font-semibold mt-32">
-        <p>Для того, чтобы получить расклад, вслух проговори</p>
-        <span class="orange-text">“Какое будущее ждёт &lt;Иванова Ивана&gt; в &lt;нашей компании&gt;?” </span>
-        <p>Затем выбери 7 карт и получи ответ на вопрос.</p>
+      <div class="flex flex-row w-full justify-stretch mt-32">
+        <div class="flex flex-col flex-grow text-2xl font-semibold">
+          <p>Для того, чтобы получить расклад, вслух проговори</p>
+          <span class="orange-text">“Какое будущее ждёт &lt;Иванова Ивана&gt; в &lt;нашей компании&gt;?” </span>
+          <p>Затем выбери 7 карт и получи ответ на вопрос.</p>
+        </div>
+        <div class="flex flex-col justify-center items-center ">
+          <div 
+            @click="sendTaro"
+            :class="{'btn-disabled': pickedCardsCount !== 7 }" 
+            class="py-2 px-4 rounded-lg text-2xl btn">
+            Получить расклад
+          </div>
+        </div>
       </div>
       <div class="flex flex-col w-full items-center gap-y-10 my-20">
         <div class="flex flex-row relative w-[1396px] h-64">
-          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute card-animation" src="../assets/cards/back.png"/>
+          <img 
+            v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" 
+            @click="pickCard(_ - 1)" 
+            :class="{'card-picked': tarotStore.cards[_-1]?.isPicked}"
+            class="max-w-none min-w-none w-40 h-64 absolute card-animation" 
+            src="../assets/cards/back.png"/>
         </div>
         <div class="flex flex-row relative w-[1396px] h-64">
-          <img v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" class="max-w-none min-w-none w-40 h-64 absolute card-animation" src="../assets/cards/back.png"/>
+          <img 
+            v-for="_ in 39" :style="{left: (_ * 30) + 'px'}" 
+            @click="pickCard(38 + _)" 
+            :class="{'card-picked': tarotStore.cards[_+38]?.isPicked}"
+            class="max-w-none min-w-none w-40 h-64 absolute card-animation" 
+            src="../assets/cards/back.png"/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-
+import { mapStores } from 'pinia';
+import { useTarotStore } from '@/stores/tarotStore';
+import { useStatusWindowStore } from '@/stores/statusWindowStore';
+import { type ICard, type IPickCard, StatusCodes } from '@/helpers/constants';
+import { API_Tarot } from '@/api/api';
 export default{
+  data(){
+    return {
 
-  
+    }
+  },
+  computed:{
+    ...mapStores(useTarotStore, useStatusWindowStore),
+
+    pickedCardsCount(){
+      let count = 0;
+      this.tarotStore.cards.forEach(card => {
+        if(card.isPicked) count++;
+      });
+      return count;
+    },
+  },
+  mounted(){
+    this.tarotStore.generateCards();
+  },
+  methods: {
+    pickCard(cardIndex: number){
+      if(this.pickedCardsCount === 7 && !this.tarotStore.cards[cardIndex].isPicked){
+        this.statusWindowStore.showStatusWindow(StatusCodes.error, 'Максимум можно выбрать 7 карт!', 3000);
+        return;
+      }
+      this.tarotStore.cards[cardIndex].isPicked = !this.tarotStore.cards[cardIndex].isPicked;
+    },
+    sendTaro(){
+      let errorCount = 0;
+      for(let i = 0; i < 7; i++){
+        //this.tarotStore.categoryCards.
+        API_Tarot(i)
+        .then(response => {
+          const newCard: ICard = {  direct_meaning: '', reverse_meaning: '', id: -1};
+          //newCard.id = response.id;
+        })
+        .catch(error => {
+          i--;
+          errorCount++;
+        });
+        if(errorCount === 14) break;
+      }
+    },
+  },
 };
 
 </script>
