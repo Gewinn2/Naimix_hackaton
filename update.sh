@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 LOCKFILE="/tmp/backend_updater.lock"
 trap "rm -f $LOCKFILE; exit" INT TERM EXIT
