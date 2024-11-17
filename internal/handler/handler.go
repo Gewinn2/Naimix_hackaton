@@ -24,9 +24,9 @@ func NewHandler(services *service.Service, logger *zerolog.Logger, conf *config.
 
 func (h *Handler) Router() *fiber.App {
 	f := fiber.New(fiber.Config{
-		Prefork:       true,
-		CaseSensitive: true,
-		StrictRouting: true,
+		//Prefork:       true,
+		//CaseSensitive: true,
+		//StrictRouting: true,
 	})
 
 	f.Use(cors.New(cors.Config{
