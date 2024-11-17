@@ -1546,11 +1546,10 @@ section {
 .line{
   stroke: #f0def0;
   stroke-width: 2;
-  transition: stroke-width 100ms ease-out;
 }
 
 .line:hover{
-  stroke-width: 3;
+  stroke-width: 5;
 }
 
 .line-good{
