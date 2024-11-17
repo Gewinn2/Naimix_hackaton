@@ -18,11 +18,11 @@ RUN apk add --no-cache ca-certificates && \
 
 USER appuser
 
-COPY --from=builder /main /bin/main
+COPY --from=builder /main /app/main
 COPY --from=builder /app/.env /app/.env
 
 WORKDIR /app
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/main"]
+ENTRYPOINT ["/app/main"]
