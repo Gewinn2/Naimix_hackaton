@@ -17,23 +17,25 @@ trap cleanup EXIT
 
 cp "$DOCKER_COMPOSE_FILE" "${DOCKER_COMPOSE_FILE}.bak"
 
-echo "Пересборка контейнеров..."
-docker compose -f $DOCKER_COMPOSE_FILE build
+docker compose down
+docker compose up -d --build
+# echo "Пересборка контейнеров..."
+# docker compose -f $DOCKER_COMPOSE_FILE build
 
-echo "Тегирование образов с новым тегом: $NEW_TAG..."
-for IMAGE in $(docker compose -f $DOCKER_COMPOSE_FILE config | grep 'image:' | awk '{print $2}'); do
-  NEW_IMAGE="${IMAGE%%:*}:${NEW_TAG}"
-  echo "Тегирование $IMAGE -> $NEW_IMAGE"
-  docker tag $IMAGE $NEW_IMAGE
-  sed -i "s|$IMAGE|$NEW_IMAGE|g" $DOCKER_COMPOSE_FILE
-done
+# echo "Тегирование образов с новым тегом: $NEW_TAG..."
+# for IMAGE in $(docker compose -f $DOCKER_COMPOSE_FILE config | grep 'image:' | awk '{print $2}'); do
+#   NEW_IMAGE="${IMAGE%%:*}:${NEW_TAG}"
+#   echo "Тегирование $IMAGE -> $NEW_IMAGE"
+#   docker tag $IMAGE $NEW_IMAGE
+#   sed -i "s|$IMAGE|$NEW_IMAGE|g" $DOCKER_COMPOSE_FILE
+# done
 
-echo "Развертывание новых версий..."
-docker compose -f $DOCKER_COMPOSE_FILE up -d --remove-orphans
+# echo "Развертывание новых версий..."
+# docker compose -f $DOCKER_COMPOSE_FILE up -d --remove-orphans
 
-echo "Очистка старых контейнеров..."
-docker image prune -f > /dev/null
-docker container prune -f > /dev/null
+# echo "Очистка старых контейнеров..."
+# docker image prune -f > /dev/null
+# docker container prune -f > /dev/null
 
 echo "Проверка состояния..."
 if docker compose ps | grep -q "Exit"; then
