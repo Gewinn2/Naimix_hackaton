@@ -1,7 +1,7 @@
 //all constants
 
 //api.ts
-export const API = 'http://localhost:8080';
+export const API = 'http://app:8080';
 export const DEVMODE = true;
 export const minDate = new Date('1950-01-01'); // минимальная дата рождения для пользователя
 export const maxDate = new Date('2011-01-01'); // максимальная дата рождения для пользователя
