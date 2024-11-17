@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-grow flex-col items-center justify-center">
-    <div class="py-5 px-7 rounded-lg flex flex-col gap-y-6 login-shadow w-96">
+  <div class="flex flex-grow flex-col items-center justify-center w-full login-bg-image">
+    <div class="py-5 px-7 rounded-lg flex flex-col gap-y-6 login-shadow w-96 bg-slate-50">
       <div class="p-2 rounded-lg absolute cursor-pointer bg-slate-200" @click="$router.push({name: 'SignUpPage1'})">
         <img class=" w-6 h-6" src="../assets/icons/icon-back.svg"/>
       </div>
-      <div class="w-full text-center text-2xl font-semibold">Регистрация</div>
+      <div class="w-full text-center text-2xl font-semibold text-gray-800">Регистрация</div>
       <div class="flex flex-col gap-y-5">
         <loginInput 
           type="text" 
@@ -36,7 +36,7 @@
           />
       </div>
       <submitButton value="Зарегистрироваться" class="mt-8" @click="SubmitSignUp"/>
-      <div class="w-full text-center text-sm cursor-default">
+      <div class="w-full text-center text-sm cursor-default text-gray-800">
         Уже есть аккаунт?
         <span class="text-sky-500 cursor-pointer hover:text-sky-600" @click="$router.push({name: 'LoginPage'})">Войдите в аккаунт!</span>
       </div>

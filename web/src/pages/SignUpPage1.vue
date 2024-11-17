@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-grow flex-col items-center justify-center">
-    <div class="py-5 px-7 rounded-lg flex flex-col gap-y-6 login-shadow w-96">
-      <div class="w-full text-center text-2xl font-semibold">Регистрация</div>
+  <div class="flex flex-grow flex-col items-center justify-center w-full login-bg-image">
+    <div class="py-5 px-7 rounded-lg flex flex-col gap-y-6 login-shadow w-96 bg-slate-50">
+      <div class="w-full text-center text-2xl font-semibold text-gray-800">Регистрация</div>
       <div class="flex flex-col gap-y-5">
         <loginInput 
           type="email" 
@@ -26,7 +26,7 @@
           />
       </div>
       <submitButton value="Далее" class="mt-8" @click="nextPage"/>
-      <div class="w-full text-center text-sm cursor-default">
+      <div class="w-full text-center text-sm cursor-default text-gray-800">
         Уже есть аккаунт?
         <span class="text-sky-500 cursor-pointer hover:text-sky-600" @click="$router.push({name: 'LoginPage'})">Войдите в аккаунт!</span>
       </div>

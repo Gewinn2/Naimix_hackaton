@@ -107,3 +107,17 @@ section{
   background-size:contain;
   background-position-x: center;
 }
+
+.login-bg-image{
+  background-image: url('../icons/login-bg.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position-x: center;
+}
+
+.welcome-bg-image{
+  background-image: url('../icons/welcome_bg.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position-x: center;
+}

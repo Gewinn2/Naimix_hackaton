@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useHeaderStore } from "@/stores/headerStore";
+import { useLoginStore } from "@/stores/loginStore";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -7,7 +8,8 @@ export const router = createRouter({
     {
       name: 'WelcomePage',
       path: '/',
-      redirect: {name: "LoginPage"},
+      component: () => import('../pages/WelcomePage.vue'),
+      meta: {requiresAuth: false},
     },
     {
       name: 'LoginPage',
@@ -66,7 +68,15 @@ router.beforeEach((to, from, next) => {
   const headerStore = useHeaderStore();
   headerStore.currentPage = to.name === undefined ? '' : to.name.toString();
 
-  if(to.name === undefined) next({name: 'LoginPage'});
+  if(to.name === undefined) next({name: 'WelcomePage'});
+
+  if(to.name === 'SignUpPage2'){
+    const loginStore = useLoginStore();
+    if(loginStore.SignupEmail === '' || loginStore.SignupPassword === '' || loginStore.SignupPhoneNumber === ''){
+      next({name: 'SignUpPage1'});
+      return;
+    }
+  }
   
   next();
 });

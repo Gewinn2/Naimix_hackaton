@@ -22,7 +22,7 @@
           <div 
             @click="sendTaro"
             :class="{'btn-disabled': pickedCardsCount !== 7 }" 
-            class="py-2 px-4 rounded-lg text-2xl btn">
+            class="py-2 px-4 rounded-lg text-2xl text-center btn">
             Получить расклад
           </div>
         </div>

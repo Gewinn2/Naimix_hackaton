@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-start relative">
     <label
-      class="absolute transition-all"
+      class="absolute transition-all text-gray-800"
       :class="{ 'login-label': !focusLabel, 'login-label-focus': focusLabel }"
       @click="$refs.input.focus()"
       >{{ text }}</label>
@@ -11,7 +11,7 @@
       :class="{ 'border-sky-500': isFocused, 'border-slate-500': !isFocused, 'bad-input': error}"
     >
       <input
-        class="bg-transparent outline-none h-7 pl-1 text-lg flex-1"
+        class="bg-transparent outline-none h-7 pl-1 text-lg flex-1 text-gray-800"
         :type="inputType"
         v-model="inputValue"
         ref="input"

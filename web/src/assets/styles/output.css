@@ -640,6 +640,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-24 {
+  margin-top: 6rem;
+}
+
 .mt-32 {
   margin-top: 8rem;
 }
@@ -658,14 +662,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mt-20 {
-  margin-top: 5rem;
-}
-
-.mt-24 {
-  margin-top: 6rem;
 }
 
 .flex {
@@ -692,6 +688,10 @@ video {
   height: 4rem;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -716,10 +716,6 @@ video {
   height: 100%;
 }
 
-.h-24 {
-  height: 6rem;
-}
-
 .max-h-\[600px\] {
   max-height: 600px;
 }
@@ -732,12 +728,20 @@ video {
   width: 2.5rem;
 }
 
+.w-10\/12 {
+  width: 83.333333%;
+}
+
 .w-14 {
   width: 3.5rem;
 }
 
 .w-16 {
   width: 4rem;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-32 {
@@ -768,6 +772,10 @@ video {
   width: 24rem;
 }
 
+.w-\[1000px\] {
+  width: 1000px;
+}
+
 .w-\[1396px\] {
   width: 1396px;
 }
@@ -780,36 +788,16 @@ video {
   width: 400px;
 }
 
+.w-\[450px\] {
+  width: 450px;
+}
+
 .w-\[500px\] {
   width: 500px;
 }
 
 .w-full {
   width: 100%;
-}
-
-.w-10\/12 {
-  width: 83.333333%;
-}
-
-.w-\[600px\] {
-  width: 600px;
-}
-
-.w-\[900px\] {
-  width: 900px;
-}
-
-.w-\[1000px\] {
-  width: 1000px;
-}
-
-.w-\[450px\] {
-  width: 450px;
-}
-
-.w-24 {
-  width: 6rem;
 }
 
 .min-w-0 {
@@ -929,6 +917,10 @@ video {
   row-gap: 0.5rem;
 }
 
+.gap-y-20 {
+  row-gap: 5rem;
+}
+
 .gap-y-3 {
   row-gap: 0.75rem;
 }
@@ -947,10 +939,6 @@ video {
 
 .gap-y-8 {
   row-gap: 2rem;
-}
-
-.gap-y-20 {
-  row-gap: 5rem;
 }
 
 .self-start {
@@ -1155,6 +1143,11 @@ video {
   line-height: 2.5rem;
 }
 
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -1170,9 +1163,8 @@ video {
   line-height: 1.75rem;
 }
 
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
+.font-bold {
+  font-weight: 700;
 }
 
 .font-medium {
@@ -1181,10 +1173,6 @@ video {
 
 .font-semibold {
   font-weight: 600;
-}
-
-.font-bold {
-  font-weight: 700;
 }
 
 .text-gray-800 {
@@ -1388,6 +1376,20 @@ section {
   background-image: url('../icons/main-bg.png');
   background-repeat: no-repeat;
   background-size:contain;
+  background-position-x: center;
+}
+
+.login-bg-image{
+  background-image: url('../icons/login-bg.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position-x: center;
+}
+
+.welcome-bg-image{
+  background-image: url('../icons/welcome_bg.png');
+  background-repeat: no-repeat;
+  background-size:cover;
   background-position-x: center;
 }
 
