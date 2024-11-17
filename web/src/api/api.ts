@@ -94,7 +94,7 @@ export function API_Tarot(categoryID: number){
 //cosmogramm
 export function API_Cosmogramm(data: ICosmogrammRequest){
   return new Promise((resolve, reject) => {
-    axios.post(`${API}/card/$}`, data)
+    axios.post(`${API}/cosmogram`, data)
     .then(response => {
       if(DEVMODE) console.log(`Cosmogramm get success: `, response);
       resolve(response);

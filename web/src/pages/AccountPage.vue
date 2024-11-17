@@ -62,6 +62,7 @@ export default{
         this.statusWindowStore.showStatusWindow(StatusCodes.error, 'Что-то пошло не так при выходе из аккаунта!', this.time);
       })
     },
+    
     createCompany(){
       const stID = this.statusWindowStore.showStatusWindow(StatusCodes.loading, 'Создаем компанию...', -1);
 

@@ -107,7 +107,7 @@ export default{
       this.pickedCards = [];
 
       let errorCount = 0;
-      for(let i = 0; i < 7; i++){
+      for(let i = 1; i < 8; i++){
         API_Tarot(i)
         .then(response => {
           const newCard: ICard = {  direct_meaning: '', reverse_meaning: '', id: -1};

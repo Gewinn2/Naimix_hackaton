@@ -100,3 +100,10 @@ section{
 .card-animation:hover, .card-picked{
   transform: translateY(-20px);
 }
+
+.main-bg-image{
+  background-image: url('../icons/main-bg.png');
+  background-repeat: no-repeat;
+  background-size:contain;
+  background-position-x: center;
+}
