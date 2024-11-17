@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row gap-x-5 min-h-20">
-    <CardItem :id="cardId" class="w-52"/>
+    <CardItem :id="cardId" class="w-52" :class="{'rotate-180' : reversed}"/>
     <div class="flex flex-col items-start gap-y-1">
       <p class="text-3xl">{{ scope }}</p>
       <p class="text-2xl orange-text">{{ category }}</p>
@@ -24,6 +24,11 @@ export default{
     scope: {
       type: String,
       required: true,
+    },
+    reversed: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     category: {
       type: String,
