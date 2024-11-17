@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex flex-col items-center overflow-y-scroll">
-    <div class="w-8/12 h-full flex flex-col z-20 relative top-5">
-      <div class="absolute z-10 right-0 flex flex-col justify-center items-center">
+    <div class="w-8/12 h-full flex flex-col z-20 relative">
+      <div class="absolute z-10 right-0 flex flex-col justify-center items-center top-5">
         <svg class="absolute w-[500px] h-[300px] z-10" viewBox="0 0 766 404" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="250" cy="154" r="250" fill="#9A9A9A"/>
           <circle cx="590" cy="154" r="250" fill="#FF9929"/>
@@ -71,20 +71,23 @@
           </div>
         </div>
       </section>
-      <section>
-        <p class="text-4xl text-center">Анализ совместимости</p>
-        <div class="flex flex-col gap-y-8">
-          <div class="flex flex-col gap-y-4">
-            <p class="text-2xl">Коммуникация: 100%</p>
-            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
-          </div>
-          <div class="flex flex-col gap-y-4">
-            <p class="text-2xl">Эмоциональность: 67%</p>
-            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
-          </div>
-          <div class="flex flex-col gap-y-4">
-            <p class="text-2xl">Работоспособность: 93%</p>
-            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
+      <section v-if="getCompatibilities.length !== 0">
+        <p class="text-4xl text-center">Анализ совместимостей</p>
+        <div class="flex flex-col gap-y-8 mt-8">
+          <div class="flex flex-col gap-y-8 w-full" v-for="item in getCompatibilities">
+            <p class="text-left text-3xl font-medium">Совместимость с: {{ item.employee_full_name }}</p>
+            <div class="flex flex-col gap-y-4">
+              <p class="text-2xl">Коммуникация: {{ item.communication}}%</p>
+              <p class="text-lg text-justify">{{ item.communication_comment }}</p>
+            </div>
+            <div class="flex flex-col gap-y-4">
+              <p class="text-2xl">Эмоциональность: {{ item.emotions}}%</p>
+              <p class="text-lg text-justify">{{ item.emotions_comment }}</p>
+            </div>
+            <div class="flex flex-col gap-y-4">
+              <p class="text-2xl">Работоспособность: {{item.work}}%</p>
+              <p class="text-lg text-justify">{{ item.work_comment }}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -139,6 +142,10 @@ export default{
     getLilith() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_Lilith')[0]?.abs_pos.toFixed(2); },
     getMSN() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_South_Node')[0]?.abs_pos.toFixed(2); },
     getMN() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_Node')[0]?.abs_pos.toFixed(2); },
+
+    getCompatibilities(){
+      return this.cosmogrammStore.compatibility;
+    }
   },
   mounted(){
     if(this.cosmogrammStore.cosmoPlanets.length !== 0) this.drawCosmogram();
@@ -294,6 +301,8 @@ export default{
         this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.sun);
         this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.uranus);
         this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.venus);
+
+        this.cosmogrammStore.compatibility = response.compatibilities;
 
         setTimeout(() => {
           this.drawCosmogram(),
