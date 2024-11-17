@@ -1,25 +1,25 @@
 <template>
-  <div class="flex flex-col gap-y-2 mt-2 max-h-[600px]">
-    <p class=" text-lg">{{ title }}</p>
-    <div class="flex flex-row mb:self-start rounded-lg input-border">
+  <div class="flex flex-col gap-y-4 mt-2 max-h-[600px]">
+    <p class=" text-3xl font-semibold w-[400px]">{{ title }}</p>
+    <div class="flex flex-row mb:self-start rounded-lg input-border overflow-hidden">
 
       <input 
-        class=" bg-transparent p-2 outline-none min-w-0 max-w-none w-full flex-grow mb:w-96" 
+        class=" bg-slate-50 p-3 outline-none min-w-0 max-w-none w-full flex-grow mb:w-96 text-2xl font-medium text-gray-900" 
         type="text" 
         :placeholder
         v-model="searchFilter"
       >
 
       <div 
-        class="w-10 h-10 flex flex-col justify-center items-center cursor-pointer rounded-r-lg bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        class="w-14 h-14 flex flex-col justify-center items-center cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         @click="filterUserList"
         >
         <img class="w-7 h-7" src="../assets/icons/icon-search.svg"/>
       </div>
 
     </div>
-    <div class="flex flex-col p-2 pr-0 rounded-lg overflow-hidden input-border">
-      <div class="flex-grow flex flex-col gap-y-2 pr-2 scrollable">
+    <div class="flex flex-col p-3 rounded-lg overflow-hidden input-border">
+      <div class="flex-grow flex flex-col gap-y-3">
         <component 
           v-for="item in filteredUsersList" 
           :key = item.id
@@ -30,11 +30,11 @@
           :isChoosed = item.isChoosed
           @changeChoose = "choosedUser"
         /> 
-        <p v-if="filteredUsersList.length === 0">Все сотрудники выбраны!</p>
+        <p v-if="filteredUsersList.length === 0" class="text-lg">Все сотрудники выбраны!</p>
       </div>
     </div>
-    <div class="flex flex-col p-2 pr-0 mt-4 rounded-lg overflow-hidden input-border">
-      <div class="flex-grow flex flex-col gap-y-2 pr-2 scrollable">
+    <div class="flex flex-col p-3 mt-4 rounded-lg overflow-hidden input-border">
+      <div class="flex-grow flex flex-col gap-y-3">
         <component 
           v-for="item in choosedUsersList" 
           :key = item.id
@@ -45,7 +45,7 @@
           :isChoosed = item.isChoosed
           @changeChoose = "choosedUser"
         /> 
-        <p v-if="choosedUsersList.length === 0">Выберите сотрудников</p>
+        <p v-if="choosedUsersList.length === 0" class="text-lg">Выберите сотрудников</p>
       </div>
     </div>
   </div>

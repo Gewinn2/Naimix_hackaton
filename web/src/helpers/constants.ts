@@ -1,7 +1,7 @@
 //all constants
 
 //api.ts
-export const API = 'http://localhost:8080/';
+export const API = 'http://localhost:8080';
 export const DEVMODE = true;
 export const minDate = new Date('1950-01-01'); // минимальная дата рождения для пользователя
 export const maxDate = new Date('2011-01-01'); // максимальная дата рождения для пользователя
@@ -50,6 +50,68 @@ export interface ICard{
   direct_meaning: string,
   reverse_meaning: string,
   id: number,
+};
+
+export interface ICardCategories{
+  scope: string,
+  category: string,
+  description: string,
+};
+
+export interface ICosmogrammRequest{
+  birth_date: string,
+  name: string,
+  surname: string,
+  third_name: string,
+};
+
+export interface ICosmogrammResponse{
+  compatibilities: ICosmogrammCompatibilitiy[],
+  cosmogram: ICosmogrammCosmogramm,
+};
+
+export interface ICosmogrammCompatibilitiy{
+  candidate_full_name: string,
+  communication: number,
+  communication_comment: string,
+  emotions: number,
+  emotions_comment: string,
+  employee_full_name: string,
+  work: number,
+  work_comment: string,
+};
+
+export interface ICosmogrammCosmogramm{
+  chiron: ICosmogrammPlanet,
+  city: string,
+  day: number,
+  hour: number,
+  jupiter: ICosmogrammPlanet,
+  lat: number,
+  lng: number,
+  mars: ICosmogrammPlanet,
+  mean_lilith: ICosmogrammPlanet,
+  mean_node: ICosmogrammPlanet,
+  mean_south_node: ICosmogrammPlanet,
+  mercury: ICosmogrammPlanet,
+  minute: number,
+  month: number,
+  moon: ICosmogrammPlanet,
+  name: string,
+  nation: string,
+  neptune: ICosmogrammPlanet,
+  pluto: ICosmogrammPlanet,
+  saturn: ICosmogrammPlanet,
+  sun: ICosmogrammPlanet,
+  uranus: ICosmogrammPlanet,
+  venus: ICosmogrammPlanet,
+  year: number,
+};
+
+export interface ICosmogrammPlanet{
+  abs_pos: number,
+  name: string,
+  retrograde: boolean,
 };
 
 //enums
@@ -155,3 +217,13 @@ export function GET_CARD_IMAGE(cardID: number):string {
   const arcanaFolder = (cardID < 22) ? 'majorArcana' : 'minorArcana';
   return `${arcanaFolder}/${TAROT_CARDS[cardID]}.png`;
 };
+
+export const CARD_CATEGORIES = [
+  {scope: 'Первая сфера:', category: 'Соответствие ожиданиям работодателя', description: 'Результат покажет, насколько навыки рекрута подходят под запрос работодателя'},
+  {scope: 'Вторя сфера:', category: 'Мотивация и цели', description: 'Результат покажет, насколько карьерные цели и амбиции рекрута соотносятся с целями компании'},
+  {scope: 'Третья сфера:', category: 'Финансовые перспективы', description: 'Результат покажет, какие финансовые условия и возможные доходы ждут рекрута'},
+  {scope: 'Четвертая сфера:', category: 'Рабочая среда', description: 'Результат покажет, какая атмосфера и условия работы ждут рекрута'},
+  {scope: 'Пятая сфера:', category: 'Личностный рост', description: 'Результат покажет, как рекрут сможет развиваться в выбранном направлении'},
+  {scope: 'Шестая сфера:', category: 'Взаимоотношения с коллегами', description: 'Результат покажет, какие взаимоотношения ждут рекрута и будущих коллег'},
+  {scope: 'Седьмая сфера:', category: 'Гибкость и адаптивность', description: 'Результат покажет, насколько быстро рекрут сможет адаптироваться к задачам'},
+] as ICardCategories[];

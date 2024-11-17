@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API, DEVMODE, type IApiLoginData, type IApiSignUpData } from "@/helpers/constants";
+import { API, DEVMODE, type IApiLoginData, type IApiSignUpData, type ICosmogrammRequest } from "@/helpers/constants";
 
 //check authentication function
 export function API_CheckAuth(){
@@ -61,7 +61,7 @@ export function API_LogOut(){
   });
 };
 
-//logout
+//tarot
 export function API_Tarot(categoryID: number){
   return new Promise((resolve, reject) => {
     axios.get(`${API}/card/${categoryID}`)
@@ -71,6 +71,21 @@ export function API_Tarot(categoryID: number){
     })
     .catch(error => {
       if(DEVMODE) console.log(`Card get, category[${categoryID}] error: `, error);
+      reject(error);
+    });
+  });
+};
+
+//cosmogramm
+export function API_Cosmogramm(data: ICosmogrammRequest){
+  return new Promise((resolve, reject) => {
+    axios.post(`${API}/card/$}`, data)
+    .then(response => {
+      if(DEVMODE) console.log(`Cosmogramm get success: `, response);
+      resolve(response);
+    })
+    .catch(error => {
+      if(DEVMODE) console.log(`Cosmogramm get error: `, error);
       reject(error);
     });
   });

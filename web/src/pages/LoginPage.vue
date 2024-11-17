@@ -6,7 +6,7 @@
         <loginInput 
           type="text" 
           text="Номер телефона или почта" 
-          :error="phone.error !== '' || email.error !== ''"
+          :error="phone.error !== '' && email.error !== ''"
           @input-change="ChangePhoneEmail"
           />
         <loginInput 

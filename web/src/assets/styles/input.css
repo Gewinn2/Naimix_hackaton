@@ -90,6 +90,9 @@ section{
 .btn-disabled{
   background-color: #6a6d6d;
 }
+.btn-disabled:hover, .btn-disabled:active{
+  background-color: #6a6d6d;
+}
 
 .card-animation{
   transition: transform 50ms ease-out;

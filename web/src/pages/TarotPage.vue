@@ -5,7 +5,7 @@
         Узнай, что тебя ждёт с помощью <br> Таро-расклада!
       </div>
     </div>
-    <div class="w-10/12 h-full z-10 flex flex-col items-center gap-y-2">
+    <div class="w-8/12 h-full z-10 flex flex-col items-center gap-y-2">
       <div class="w-full flex flex-row gap-x-2 items-center mt-4">
         <svg class="w-16 h-16" viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M43.2043 2.12093C41.7424 1.68047 40.2398 2.65641 39.8479 4.30096L26.5088 60.2776C26.1168 61.9228 26.9846 63.6139 28.4471 64.0545L63.2097 74.5284C64.672 74.9687 66.1743 73.9929 66.5663 72.3484L79.9057 16.3715C80.2977 14.7264 79.4297 13.0353 77.9675 12.5947L43.2043 2.12093ZM19.6096 58.1966L28.7318 19.9158L2.03283 27.96C0.570383 28.4006 -0.297505 30.0918 0.0945283 31.7369L13.4337 87.7134C13.8256 89.3578 15.3281 90.3343 16.79 89.8933L51.5529 79.4199C51.5983 79.4064 51.6431 79.3916 51.6873 79.3755L26.5993 71.8168C21.3256 70.2276 18.1958 64.1292 19.6096 58.1966Z" fill="white"/>
@@ -45,6 +45,15 @@
             src="../assets/cards/back.png"/>
         </div>
       </div>
+      <div v-if="pickedCards.length !== 0" class="flex flex-col gap-y-8 p-2 w-full">
+        <CardInfo v-for="(item, index) in getCardCategories" 
+          :key="index"
+          :card-id="pickedCards[index].id" 
+          :scope="item.scope" 
+          :category="item.category" 
+          :description="item.description"
+          :text="pickedCards[index].direct_meaning"/>
+      </div>
     </div>
   </div>
 </template>
@@ -52,12 +61,16 @@
 import { mapStores } from 'pinia';
 import { useTarotStore } from '@/stores/tarotStore';
 import { useStatusWindowStore } from '@/stores/statusWindowStore';
-import { type ICard, type IPickCard, StatusCodes } from '@/helpers/constants';
+import { type ICard, type IPickCard, StatusCodes, type ICardCategories, CARD_CATEGORIES } from '@/helpers/constants';
 import { API_Tarot } from '@/api/api';
+import CardInfo from '@/shared/cardInfo.vue';
 export default{
+  components:{
+    CardInfo,
+  },
   data(){
     return {
-
+      pickedCards: [] as ICard[],
     }
   },
   computed:{
@@ -69,6 +82,10 @@ export default{
         if(card.isPicked) count++;
       });
       return count;
+    },
+
+    getCardCategories(){
+      return CARD_CATEGORIES;
     },
   },
   mounted(){
@@ -83,9 +100,14 @@ export default{
       this.tarotStore.cards[cardIndex].isPicked = !this.tarotStore.cards[cardIndex].isPicked;
     },
     sendTaro(){
+      if(this.pickedCardsCount !== 7) {
+        this.statusWindowStore.showStatusWindow(StatusCodes.error, 'Нужно выбрать ровно 7 карт!', 3000);
+        return;
+      }
+      this.pickedCards = [];
+
       let errorCount = 0;
       for(let i = 0; i < 7; i++){
-        //this.tarotStore.categoryCards.
         API_Tarot(i)
         .then(response => {
           const newCard: ICard = {  direct_meaning: '', reverse_meaning: '', id: -1};

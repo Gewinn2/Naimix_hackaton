@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row flex-wrap gap-2" ref="imgParent">
-    <CardItem v-for="(item, index) in getTarot" :key="item" :id="index" class="w-52 aspect-auto border-solid border border-gray-800"/>
+    <CardItem v-for="(item, index) in getTarot" :key="item" :id="index" class="w-52"/>
   </div>
 
 </template>

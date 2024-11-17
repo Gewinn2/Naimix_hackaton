@@ -7,8 +7,8 @@
           <img class="w-32 h-32" src="../assets/icons/icon-profile.svg"/>
           <div class="flex flex-col gap-y-2 items-center">
             <p class="text-2xl">Иванов Смирнов Соболев</p>
-            <p class="text-lg mt-2">Компания: ООО Псковский туберкулез</p>
-            <p class="text-lg">Должность: слесарь-автомеханик</p>
+            <p class="text-lg mt-2">Компания: Naimix</p>
+            <p class="text-lg">Должность: HR</p>
           </div>
         </div>
         <div class="flex flex-col gap-y-3 items-stretch py-3 px-6 bg-color-light rounded-lg profile-shadow">
