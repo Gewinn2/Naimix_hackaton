@@ -31,7 +31,7 @@ func (h *Handler) Router() *fiber.App {
 
 	f.Use(cors.New(cors.Config{
 
-		AllowOrigins:     "http://lab.easy4.team:3000",
+		AllowOrigins:     "http://localhost:3000",
 		AllowCredentials: true,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
