@@ -3,11 +3,11 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
 	"github.com/rs/zerolog"
 	_ "server/docs"
 	"server/internal/config"
-	"server/internal/log"
 	"server/internal/service"
 	"server/pkg"
 )
@@ -23,30 +23,26 @@ func NewHandler(services *service.Service, logger *zerolog.Logger, conf *config.
 }
 
 func (h *Handler) Router() *fiber.App {
-	f := fiber.New(fiber.Config{
-		//Prefork:       true,
-		//CaseSensitive: true,
-		//StrictRouting: true,
-	})
+	//f := fiber.New(fiber.Config{
+	//	//Prefork:       true,
+	//	//CaseSensitive: true,
+	//	//StrictRouting: true,
+	//})
+	//
+	////f.Use(pkg.CORSMiddleware())
 
-	//f.Use(pkg.CORSMiddleware())
-
+	f := fiber.New()
+	f.Get("/swagger/*", swagger.HandlerDefault)
+	f.Use(logger.New())
 	f.Use(cors.New(cors.Config{
-		AllowOrigins:     "*",
+		AllowOrigins: "http://frontend:3000/",
+		//AllowOrigins:     "http://localhost:8080/",
 		AllowCredentials: true,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
 	}))
 
-	f.Options("/*", func(c *fiber.Ctx) error {
-		c.Set("Access-Control-Allow-Origin", "http://localhost:3000,http://localhost:8080,http://lab.easy4.team") // Или ваш список доменов
-		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
-		c.Set("Access-Control-Allow-Credentials", "true")
-		return c.SendStatus(fiber.StatusNoContent)
-	})
-
-	f.Use(log.RequestLogger(h.logger))
+	//f.Use(log.RequestLogger(h.logger))
 	f.Get("/swagger/*", swagger.HandlerDefault)
 
 	f.Post("/signup", h.SignUp)
