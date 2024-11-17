@@ -30,7 +30,7 @@ func (h *Handler) Router() *fiber.App {
 	})
 
 	f.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000, http://localhost:8080, http://lab.easy4.team",
+		AllowOrigins:     "*",
 		AllowCredentials: true,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
