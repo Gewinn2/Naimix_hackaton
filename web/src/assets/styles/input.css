@@ -63,6 +63,9 @@
 .green-bg{
   background-color: #0E6666;
 }
+.yellow-text{
+  color: #FF9929;
+}
 
 .bg-ellipse{
   background-image: url('../icons/bg-ellipse-2.svg');
@@ -122,3 +125,4 @@ section{
   background-position-x: center;
   background-position-y: center;
 }
+

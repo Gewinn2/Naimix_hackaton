@@ -1,18 +1,20 @@
 <template>
   <div class="flex flex-col flex-grow w-full items-center welcome-bg-image">
-    <div class="flex flex-row justify-between items-stretch w-10/12 h-full">
-      <div class="flex flex-col items-start">
-        <p class="">
-          Привет!
-          Ты - HR крупной компании и столкнулся с трудностями при отборе кандидатов? 
-          Или, может, ты только устраиваешься на работу и хочешь заглянуть в будущее?
-          Узнай, какие планы на ваше сотрудничество у судьбы!
-        </p>
+    <div class="flex flex-row justify-between items-stretch w-11/12 h-full">
+      <div class="flex flex-col items-start w-[700px] gap-y-6">
+        <p class="text-5xl font-medium my-10 mb-2">Привет!</p>
+        <p class="text-5xl font-medium">Ты - HR крупной компании и столкнулся с трудностями при отборе кандидатов?</p>
+        <p class="text-5xl font-medium">Или, может, ты только устраиваешься на работу и хочешь заглянуть в будущее?</p>
+        <p class="text-5xl font-medium">Узнай, какие планы на ваше сотрудничество у судьбы!</p>
       </div>
-      <div>
-        <p>
-          Войди в свой аккаунт или зарегистрируй новый, если ты впервые на нашем сайте.
-        </p>
+      <div class="flex flex-col justify-end w-[800px] gap-y-6">
+        <p class="text-5xl font-medium text-right">Войди в свой аккаунт</p>
+        <p class="text-5xl font-medium text-right">или зарегистрируй новый,</p>
+        <p class="text-5xl font-medium text-right">если ты впервые</p>
+        <p class="text-5xl font-medium text-right">на нашем сайте</p>
+        <div class="py-3 px-6 text-2xl font-bold self-end rounded-2xl my-10 yellow-text bg-slate-50">
+          Войти
+        </div>
       </div>
     </div>
   </div>
