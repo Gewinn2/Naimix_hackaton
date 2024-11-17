@@ -24,14 +24,14 @@ func NewHandler(services *service.Service, logger *zerolog.Logger, conf *config.
 
 func (h *Handler) Router() *fiber.App {
 	f := fiber.New(fiber.Config{
-		//Prefork:       true,
-		//CaseSensitive: true,
-		//StrictRouting: true,
+		Prefork:       true,
+		CaseSensitive: true,
+		StrictRouting: true,
 	})
 
 	f.Use(cors.New(cors.Config{
 
-		AllowOrigins:     "http://localhost:3000",
+		AllowOrigins:     "http://lab.easy4.team:3000",
 		AllowCredentials: true,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
