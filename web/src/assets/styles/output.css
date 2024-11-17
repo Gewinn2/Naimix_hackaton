@@ -882,6 +882,10 @@ video {
   justify-content: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .justify-evenly {
   justify-content: space-evenly;
 }
@@ -1391,6 +1395,7 @@ section {
   background-repeat: no-repeat;
   background-size:cover;
   background-position-x: center;
+  background-position-y: center;
 }
 
 .hover\:border-sky-500:hover {
