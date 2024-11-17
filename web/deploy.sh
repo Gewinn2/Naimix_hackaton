@@ -22,6 +22,6 @@ if docker ps | grep -q $APP_NAME; then
 fi
 
 echo "Запуск нового контейнера..."
-docker run -d -p 3000:3000 --name $APP_NAME $APP_NAME:$NEW_TAG
+docker run -d -p 127.0.0.1:3000:3000 --network backend_loki --name $APP_NAME $APP_NAME:$NEW_TAG
 
 echo "Деплой успешно завершен!"
