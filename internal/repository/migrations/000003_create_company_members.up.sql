@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS company_members (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE
 );
+
+INSERT INTO company_members (user_id, company_id, position)
+VALUES ()
