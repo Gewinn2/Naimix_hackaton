@@ -35,6 +35,15 @@ func (h *Handler) Router() *fiber.App {
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE",
 	}))
+
+	f.Options("/*", func(c *fiber.Ctx) error {
+		c.Set("Access-Control-Allow-Origin", "http://localhost:3000,http://localhost:8080,http://lab.easy4.team") // Или ваш список доменов
+		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
+		c.Set("Access-Control-Allow-Credentials", "true")
+		return c.SendStatus(fiber.StatusNoContent)
+	})
+
 	f.Use(log.RequestLogger(h.logger))
 	f.Get("/swagger/*", swagger.HandlerDefault)
 
