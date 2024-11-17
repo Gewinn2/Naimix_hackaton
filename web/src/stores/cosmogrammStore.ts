@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { type IUsersList } from "@/helpers/constants";
+import { type IUsersList, type ICosmogrammPlanet, type ICosmogrammCompatibilitiy } from "@/helpers/constants";
 
 export const useCosmogrammStore = defineStore('cosmogramm', {
   state(){
@@ -9,6 +9,10 @@ export const useCosmogrammStore = defineStore('cosmogramm', {
         {id: 2, name: 'Николаев Николай Николаевич', role: 'Слесарь', isChoosed: false},
         {id: 3, name: 'Зубенко Михаил Петрович', role: 'Сисадмин', isChoosed: false},
       ] as IUsersList[],
+
+      cosmoPlanets: [] as ICosmogrammPlanet[],
+
+      compatibility: [] as ICosmogrammCompatibilitiy[],
     }
   },
 });

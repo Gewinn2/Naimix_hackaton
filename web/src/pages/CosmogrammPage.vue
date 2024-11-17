@@ -44,15 +44,30 @@
               class="outline-none py-2 px-4 bg-slate-50 text-lg text-gray-800 font-medium border-2 rounded-lg border-solid border-gray-400 max-w-none w-[350px]" placeholder="ФИО рекрута"/>
           </div>
           <div v-if="1 <= choosedUsers.length && choosedUsers.length <= 10" @click="analyseCosmogramm" class="flex flex-row items-center justify-center py-2 px-4 rounded-lg cursor-pointer btn text-slate-50 text-gl font-medium">
-            Анализ совместимости
+            Анализировать
           </div>
         </div>
       </section>
-      <section>
-        <div class="flex flex-row w-full justify-between">
+      <section v-if="getCosmogrammPlanets.length !== 0">
+        <div class="flex flex-row w-full justify-between gap-x-4">
           <svg id="cosmogrammSVG"></svg>
-          <div class="flex flex-col">
-            <p>Данные космограммы</p>
+          <div class="flex flex-col items-center flex-grow gap-y-10">
+            <p class="text-center text-3xl font-medium">Данные космограммы</p>
+            <div class="flex flex-col gap-y-4 items-start w-full">
+              <p class="text-lg cursor-default">Солнце: <span class="cursor-pointer">{{ getSun }}&#176;</span></p>
+              <p class="text-lg cursor-default">Меркурий: <span class="cursor-pointer">{{ getMercury }}&#176;</span></p>
+              <p class="text-lg cursor-default">Венера: <span class="cursor-pointer">{{ getVenus }}&#176;</span></p>
+              <p class="text-lg cursor-default">Луна: <span class="cursor-pointer">{{ getMoon }}&#176;</span></p>
+              <p class="text-lg cursor-default">Марс: <span class="cursor-pointer">{{ getMars }}&#176;</span></p>
+              <p class="text-lg cursor-default">Юпитер: <span class="cursor-pointer">{{ getJupiter }}&#176;</span></p>
+              <p class="text-lg cursor-default">Сатурн: <span class="cursor-pointer">{{ getSaturn }}&#176;</span></p>
+              <p class="text-lg cursor-default">Уран: <span class="cursor-pointer">{{ getUranus }}&#176;</span></p>
+              <p class="text-lg cursor-default">Нептун: <span class="cursor-pointer">{{ getNeptune }}&#176;</span></p>
+              <p class="text-lg cursor-default">Плутон: <span class="cursor-pointer">{{ getPluto }}&#176;</span></p>
+              <p class="text-lg cursor-default">Лилит: <span class="cursor-pointer">{{ getLilith }}&#176;</span></p>
+              <p class="text-lg cursor-default">Нисх. узел: <span class="cursor-pointer">{{ getMSN}}&#176;</span></p>
+              <p class="text-lg cursor-default">Восх. узел: <span class="cursor-pointer">{{ getMN }}&#176;</span></p>
+            </div>
           </div>
         </div>
       </section>
@@ -81,7 +96,7 @@ import { mapStores } from 'pinia';
 import { useCosmogrammStore } from '@/stores/cosmogrammStore';
 import { useStatusWindowStore } from '@/stores/statusWindowStore';
 import UserList from '@/entities/userList.vue';
-import { type IUsersList, type ICosmogrammRequest, minDate, maxDate, StatusCodes } from '@/helpers/constants';
+import { type IUsersList, type ICosmogrammRequest, minDate, maxDate, StatusCodes, type ICosmogrammPlanet } from '@/helpers/constants';
 import UserItem from '@/shared/userItem.vue';
 import { API_Cosmogramm } from '@/api/api';
 import { generateCosmogramm, calculatePointCoordinates, drawLine, type Point, checkAngleDifference, type ILineType} from '@/helpers/cosmogrammDrawer';
@@ -94,8 +109,6 @@ export default{
     return{
       recrutBirthDay: '',
       recrutFIO: '',
-
-      anglesList: [312, 15, 287, 111, 224, 350, 78, 195, 256, 41, 168, 333, 88, 201] as number[],
     }
   },
   computed:{
@@ -107,10 +120,28 @@ export default{
 
     choosedUsers(){
       return this.cosmogrammStore.usersList.filter(item => item.isChoosed);
-    }
+    },
+
+    getCosmogrammPlanets(){
+      return this.cosmogrammStore.cosmoPlanets;
+    },
+
+    getSun() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Sun')[0]?.abs_pos.toFixed(2); },
+    getMercury() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mercury')[0]?.abs_pos.toFixed(2); },
+    getVenus() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Venus')[0]?.abs_pos.toFixed(2); },
+    getMoon() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Moon')[0]?.abs_pos.toFixed(2); },
+    getMars() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mars')[0]?.abs_pos.toFixed(2); },
+    getJupiter() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Jupiter')[0]?.abs_pos.toFixed(2); },
+    getSaturn() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Saturn')[0]?.abs_pos.toFixed(2); },
+    getUranus() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Uranus')[0]?.abs_pos.toFixed(2); },
+    getNeptune() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Neptune')[0]?.abs_pos.toFixed(2); },
+    getPluto() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Pluto')[0]?.abs_pos.toFixed(2); },
+    getLilith() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_Lilith')[0]?.abs_pos.toFixed(2); },
+    getMSN() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_South_Node')[0]?.abs_pos.toFixed(2); },
+    getMN() { return this.cosmogrammStore.cosmoPlanets.filter(i => i.name === 'Mean_Node')[0]?.abs_pos.toFixed(2); },
   },
   mounted(){
-    this.drawCosmogram();
+    if(this.cosmogrammStore.cosmoPlanets.length !== 0) this.drawCosmogram();
   },
   methods: {
     analyseCosmogramm(){
@@ -140,7 +171,7 @@ export default{
 
       const stID = this.statusWindowStore.showStatusWindow(StatusCodes.loading, 'Создаем космограмму совместимости...', -1);
       API_Cosmogramm(data)
-      .then(response => {
+      .then(res => {
         this.statusWindowStore.showStatusWindow(StatusCodes.success, 'Космограмма готова!', 3000);
         //
       })
@@ -150,6 +181,124 @@ export default{
       })
       .finally(() => {
         this.statusWindowStore.deteleStatusWindow(stID);
+
+        const response = {
+          compatibilities: [
+            {
+              "candidate_full_name": "Doe John Petrovich",
+              "employee_full_name": "Doe John Petrovich",
+              "communication": 100,
+              "communication_comment": "Ваши способы общения идеально совпадают. Вы понимаете друг друга с полуслова, и ваши разговоры всегда наполнены смыслом и взаимопониманием. Это создает крепкую основу для доверительных отношений.",
+              "emotions": 100,
+              "emotions_comment": "Вы делитесь глубокими эмоциональными связями, которые позволяют вам чувствовать себя комфортно и безопасно рядом друг с другом. Это создает прочный фундамент для ваших отношений, полных любви и поддержки.",
+              "work": 0,
+              "work_comment": "Ваши профессиональные подходы кажутся абсолютно несовместимыми. Это может создавать значительные препятствия в работе вместе и мешать достижению общих целей. Возможно, стоит пересмотреть свои ожидания и обсудить, как вы можете лучше сотрудничать."
+            }
+          ],
+          cosmogram: {
+            "name": "Doe John Petrovich",
+            "year": 1990,
+            "month": 1,
+            "day": 1,
+            "hour": 12,
+            "minute": 11,
+            "city": "Moscow",
+            "nation": "RU",
+            "lng": 37.6156,
+            "lat": 55.7522,
+            "sun": {
+              "name": "Sun",
+              "abs_pos": 280.6939374005611,
+              "retrograde": false
+            },
+            "moon": {
+              "name": "Moon",
+              "abs_pos": 331.67934129539293,
+              "retrograde": false
+            },
+            "mercury": {
+              "name": "Mercury",
+              "abs_pos": 295.70619328713667,
+              "retrograde": true
+            },
+            "venus": {
+              "name": "Venus",
+              "abs_pos": 306.2369170971076,
+              "retrograde": true
+            },
+            "mars": {
+              "name": "Mars",
+              "abs_pos": 249.9170335186626,
+              "retrograde": false
+            },
+            "jupiter": {
+              "name": "Jupiter",
+              "abs_pos": 95.16460072135177,
+              "retrograde": true
+            },
+            "saturn": {
+              "name": "Saturn",
+              "abs_pos": 285.6435644065208,
+              "retrograde": false
+            },
+            "uranus": {
+              "name": "Uranus",
+              "abs_pos": 275.778392524542,
+              "retrograde": false
+            },
+            "neptune": {
+              "name": "Neptune",
+              "abs_pos": 282.03364522650554,
+              "retrograde": false
+            },
+            "pluto": {
+              "name": "Pluto",
+              "abs_pos": 227.08993880185324,
+              "retrograde": false
+            },
+            "chiron": {
+              "name": "Chiron",
+              "abs_pos": 103.8213431856962,
+              "retrograde": true
+            },
+            "mean_lilith": {
+              "name": "Mean_Lilith",
+              "abs_pos": 216.45077052953468,
+              "retrograde": false
+            },
+            "mean_node": {
+              "name": "Mean_Node",
+              "abs_pos": 318.44123384913485,
+              "retrograde": true
+            },
+            "mean_south_node": {
+              "name": "Mean_South_Node",
+              "abs_pos": 138.44123384913485,
+              "retrograde": true
+            }
+          }
+        };
+
+        this.cosmogrammStore.cosmoPlanets = [];
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.chiron);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.jupiter);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.mars);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.mean_lilith);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.mean_node);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.mean_south_node);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.mercury);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.moon);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.neptune);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.pluto);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.saturn);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.sun);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.uranus);
+        this.cosmogrammStore.cosmoPlanets.push(response.cosmogram.venus);
+
+        setTimeout(() => {
+          this.drawCosmogram(),
+          200
+        });
       });
     },
     drawCosmogram(){
@@ -160,26 +309,27 @@ export default{
       container.setAttribute("height", width.toString());
       const radius = generateCosmogramm(container, width);
 
-      for(let angle1 of this.anglesList){
-        for(let angle2 of this.anglesList){
+      for(let angle1 of this.cosmogrammStore.cosmoPlanets){
+        for(let angle2 of this.cosmogrammStore.cosmoPlanets){
           if(angle1 === angle2) continue;
 
-          const lineType = checkAngleDifference(angle1, angle2);
+          const lineType = checkAngleDifference(angle1.abs_pos, angle2.abs_pos);
           if(!lineType.show) continue;
 
           drawLine(
             container, 
-            calculatePointCoordinates(width / 2, width / 2, radius, angle1),
-            calculatePointCoordinates(width / 2, width / 2, radius, angle2),
+            calculatePointCoordinates(width / 2, width / 2, radius, angle1.abs_pos),
+            calculatePointCoordinates(width / 2, width / 2, radius, angle2.abs_pos),
             ['line', lineType.class]
           );
         }
       }
     },
-    generate():number[] {
-      const mas = [] as number[]
-      for(let i = 100; i < 200; i++)mas.push(i);
-      return mas;
+    getPlanet(name: string): ICosmogrammPlanet{
+      this.cosmogrammStore.cosmoPlanets.forEach(item => {
+        if(item.name === name) return item;
+      });
+      return {abs_pos: 0, name: '', retrograde: false};
     }
   }
 };

@@ -128,14 +128,6 @@ export function drawLine(container:HTMLElement, point1: Point, point2: Point,  c
   line.setAttribute("y1", point1.y.toString());
   line.setAttribute("x2", point2.x.toString());
   line.setAttribute("y2", point2.y.toString());
-  line.setAttribute('stroke', '');
-
-  line.addEventListener('mouseover', () => {
-    line.setAttribute('stroke', '2');
-  })
-  line.addEventListener('mouseout', () => {
-    line.setAttribute('stroke', '1');
-  })
 
   classes.forEach(item => line.classList.add(item));
 
