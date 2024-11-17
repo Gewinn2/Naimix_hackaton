@@ -17,6 +17,18 @@
             @click="Logout"
             class="py-2 px-12 text-center rounded-lg cursor-pointer text-red-700 bg-white hover:underline header-shadow active:text-red-400">Выйти из аккаунта</div>
         </div>
+        <!--temporary-->
+        <div class=" flex flex-row gap-x-2">
+          <input 
+            type="text" 
+            v-model="companyName" 
+            class="py-2 px-4 rounded-lg bg-slate-50 text-gray-800 text-lg font-medium max-w-none w-[400px]" 
+            placeholder="Введите название компании"
+            />
+          <div @click="createCompany" class="py-2 px-4 text-xl rounded-lg font-medium btn">
+            Создать компанию
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -25,11 +37,12 @@
 import { mapStores } from 'pinia';
 import { useStatusWindowStore } from '@/stores/statusWindowStore';
 import { StatusCodes } from '@/helpers/constants';
-import { API_LogOut } from '@/api/api';
+import { API_LogOut, API_CreateCompany } from '@/api/api';
 export default{
   data(){
     return{
       time: 3000,
+      companyName: '',
     }
   },
   computed:{
@@ -47,6 +60,20 @@ export default{
       .catch(error => {
         this.statusWindowStore.deteleStatusWindow(stID);
         this.statusWindowStore.showStatusWindow(StatusCodes.error, 'Что-то пошло не так при выходе из аккаунта!', this.time);
+      })
+    },
+    createCompany(){
+      const stID = this.statusWindowStore.showStatusWindow(StatusCodes.loading, 'Создаем компанию...', -1);
+
+      API_CreateCompany(this.companyName)
+      .then(response => {
+        this.statusWindowStore.showStatusWindow(StatusCodes.success, 'Компания успешно создана!', 3000);
+      })
+      .catch(error => {
+        this.statusWindowStore.showStatusWindow(StatusCodes.error, 'Что-то пошло не так пр создании компании!', 3000);
+      })
+      .finally(() => {
+        this.statusWindowStore.deteleStatusWindow(stID);
       })
     }
   }

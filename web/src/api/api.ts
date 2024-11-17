@@ -61,10 +61,25 @@ export function API_LogOut(){
   });
 };
 
+//create company
+export function API_CreateCompany(name: string){
+  return new Promise((resolve, reject) => {
+    axios.post(`${API}/company/create`, name)
+    .then(response => {
+      if(DEVMODE) console.log(`Company create success: `, response);
+      resolve(response);
+    })
+    .catch(error => {
+      if(DEVMODE) console.log(`Company create error: `, error);
+      reject(error);
+    });
+  });
+};
+
 //tarot
 export function API_Tarot(categoryID: number){
   return new Promise((resolve, reject) => {
-    axios.get(`${API}/card/${categoryID}`)
+    axios.get(`${API}/tarot/${categoryID}`)
     .then(response => {
       if(DEVMODE) console.log(`Card get, category[${categoryID}] success: `, response);
       resolve(response);
