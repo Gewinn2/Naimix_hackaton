@@ -246,7 +246,7 @@ func CalculateAspect(planetA, planetB entities.Planet) string {
 
 func AddCommentToCommunication(value int) string {
 	rand.Seed(time.Now().UnixNano())
-	randomIndex := rand.Intn(3)
+	randomIndex := rand.Intn(4)
 	comment := ""
 	if value == 100 {
 		firstVariant := "Ваши способы общения идеально совпадают. Вы понимаете друг друга с полуслова, и ваши разговоры всегда наполнены смыслом и взаимопониманием. Это создает крепкую основу для доверительных отношений."
@@ -290,7 +290,7 @@ func AddCommentToCommunication(value int) string {
 
 func AddCommentToEmotions(value int) string {
 	rand.Seed(time.Now().UnixNano())
-	randomIndex := rand.Intn(3)
+	randomIndex := rand.Intn(4)
 	comment := ""
 	if value == 100 {
 		firstVariant := "Ваши эмоциональные связи невероятно крепки. Вы чувствуете друг друга на интуитивном уровне и можете поддерживать друг друга в любых ситуациях. Это создает глубокую привязанность и понимание."
@@ -334,7 +334,7 @@ func AddCommentToEmotions(value int) string {
 
 func AddCommentToWork(value int) string {
 	rand.Seed(time.Now().UnixNano())
-	randomIndex := rand.Intn(3)
+	randomIndex := rand.Intn(4)
 	comment := ""
 	if value == 100 {
 		firstVariant := "Ваши профессиональные стремления и цели идеально совпадают. Вы способны эффективно работать вместе, поддерживая друг друга на пути к успеху. Это создает отличную команду, которая может достигать высоких результатов."
