@@ -35,7 +35,7 @@ func (h *Handler) Router() *fiber.App {
 	f.Get("/swagger/*", swagger.HandlerDefault)
 	f.Use(logger.New())
 	f.Use(cors.New(cors.Config{
-		AllowOrigins: "http://frontend:3000/",
+		AllowOrigins: "http://localhost:3000/",
 		//AllowOrigins:     "http://localhost:8080/",
 		AllowCredentials: true,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
