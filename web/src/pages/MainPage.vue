@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full items-center main-bg-image mt-2 flex-grow">
-    <div class="flex flex-col w-10/12 items-center gap-y-20">
+    <div class="flex flex-col w-full xl:w-10/12 items-center gap-y-20">
       <p class="text-5xl font-bold w-[1000px] text-wrap mt-24 text-center">С помощью Harmony Compass ты сможешь проанализровать дальнейшие перспективы сотрудничества с помощью:</p>
       <div class="flex flex-row justify-evenly w-full">
         

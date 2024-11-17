@@ -554,6 +554,46 @@ video {
   display: none;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 450px) {
+  .container {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 576px;
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
 .absolute {
   position: absolute;
 }
@@ -649,6 +689,10 @@ video {
   margin-top: 6rem;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
 .mt-32 {
   margin-top: 8rem;
 }
@@ -731,10 +775,6 @@ video {
 
 .w-10 {
   width: 2.5rem;
-}
-
-.w-10\/12 {
-  width: 83.333333%;
 }
 
 .w-11\/12 {
@@ -986,6 +1026,10 @@ video {
   text-wrap: wrap;
 }
 
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -996,10 +1040,6 @@ video {
 
 .rounded-xl {
   border-radius: 0.75rem;
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
 }
 
 .border-2 {
@@ -1263,6 +1303,26 @@ video {
   transition-duration: 150ms;
 }
 
+@font-face {
+  font-family: 'Zodiac';
+
+  src: url('../fonts/Widget-Bold.woff2') format('woff2');
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Zodiac';
+
+  src: url('../fonts/Widget.woff2') format('woff2');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
 #app{
   height: 100svh;
   display: flex;
@@ -1427,6 +1487,84 @@ section {
   background-position-y: center;
 }
 
+.circle {
+  fill: none;
+  stroke: whitesmoke;
+}
+
+.circle-big {
+  fill: #63117e;
+}
+
+.circle-small {
+  fill: #353535;
+}
+
+.piece {
+  stroke: white;
+  transition: fill 150ms ease-out, d 150ms ease-out;
+}
+
+.piece-text{
+  font-family: 'Zodiac';
+  cursor: pointer;
+  transition: font-size 150ms ease-out;
+  fill: whitesmoke;
+  stroke: whitesmoke;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.circle-spin{
+  fill: none;
+  stroke: #f0def0;
+  stroke-width: 2px;
+  transform-origin: 50% 50%;
+}
+
+.circle-spin-1{
+  animation: spin 36s linear infinite;
+}
+
+.circle-spin-2{
+  animation: spin 40s linear infinite reverse;
+}
+
+.circle-spin-3{
+  animation: spin 44s linear infinite;
+}
+
+.line{
+  stroke: #f0def0;
+  stroke-width: 1;
+}
+
+.line-good{
+  stroke: #3bc91f;
+}
+
+.line-bad{
+  stroke: #c02121;
+}
+
+.line-dark{
+  stroke: #000000;
+}
+
+.tmp-font{
+  font-family: 'Zodiac';
+}
+
+@keyframes spin{
+  from{
+    rotate: 0deg;
+  }
+
+  to{
+    rotate: 360deg;
+  }
+}
+
 .hover\:border-sky-500:hover {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity, 1));
@@ -1440,6 +1578,11 @@ section {
 .hover\:bg-sky-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-slate-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-slate-300:hover {
@@ -1459,6 +1602,11 @@ section {
 .active\:bg-sky-500:active {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity, 1));
+}
+
+.active\:bg-slate-200:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
 }
 
 .active\:bg-slate-400:active {
@@ -1508,3 +1656,8 @@ section {
   }
 }
 
+@media (min-width: 1280px) {
+  .xl\:w-10\/12 {
+    width: 83.333333%;
+  }
+}

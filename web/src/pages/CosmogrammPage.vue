@@ -48,6 +48,31 @@
           </div>
         </div>
       </section>
+      <section>
+        <div class="flex flex-row w-full justify-between">
+          <svg id="cosmogrammSVG"></svg>
+          <div class="flex flex-col">
+            <p>Данные космограммы</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <p class="text-4xl text-center">Анализ совместимости</p>
+        <div class="flex flex-col gap-y-8">
+          <div class="flex flex-col gap-y-4">
+            <p class="text-2xl">Коммуникация: 100%</p>
+            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
+          </div>
+          <div class="flex flex-col gap-y-4">
+            <p class="text-2xl">Эмоциональность: 67%</p>
+            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
+          </div>
+          <div class="flex flex-col gap-y-4">
+            <p class="text-2xl">Работоспособность: 93%</p>
+            <p class="text-lg text-justify">A customer calls, extremely upset about a recent order error. They are speaking rapidly and interrupting you. Describe your approach to de-escalating the situation, actively listening to their concerns, and resolving the problem to the customer’s satisfaction. What specific communication strategies would you use?</p>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -59,6 +84,7 @@ import UserList from '@/entities/userList.vue';
 import { type IUsersList, type ICosmogrammRequest, minDate, maxDate, StatusCodes } from '@/helpers/constants';
 import UserItem from '@/shared/userItem.vue';
 import { API_Cosmogramm } from '@/api/api';
+import { generateCosmogramm, calculatePointCoordinates, drawLine, type Point, checkAngleDifference, type ILineType} from '@/helpers/cosmogrammDrawer';
 export default{
   components:{
     UserList,
@@ -68,6 +94,8 @@ export default{
     return{
       recrutBirthDay: '',
       recrutFIO: '',
+
+      anglesList: [312, 15, 287, 111, 224, 350, 78, 195, 256, 41, 168, 333, 88, 201] as number[],
     }
   },
   computed:{
@@ -80,6 +108,9 @@ export default{
     choosedUsers(){
       return this.cosmogrammStore.usersList.filter(item => item.isChoosed);
     }
+  },
+  mounted(){
+    this.drawCosmogram();
   },
   methods: {
     analyseCosmogramm(){
@@ -120,6 +151,35 @@ export default{
       .finally(() => {
         this.statusWindowStore.deteleStatusWindow(stID);
       });
+    },
+    drawCosmogram(){
+      const container = document.getElementById("cosmogrammSVG");
+      if(container === null) return;
+      const width = 800;
+      container.setAttribute("width", width.toString());
+      container.setAttribute("height", width.toString());
+      const radius = generateCosmogramm(container, width);
+
+      for(let angle1 of this.anglesList){
+        for(let angle2 of this.anglesList){
+          if(angle1 === angle2) continue;
+
+          const lineType = checkAngleDifference(angle1, angle2);
+          if(!lineType.show) continue;
+
+          drawLine(
+            container, 
+            calculatePointCoordinates(width / 2, width / 2, radius, angle1),
+            calculatePointCoordinates(width / 2, width / 2, radius, angle2),
+            ['line', lineType.class]
+          );
+        }
+      }
+    },
+    generate():number[] {
+      const mas = [] as number[]
+      for(let i = 100; i < 200; i++)mas.push(i);
+      return mas;
     }
   }
 };

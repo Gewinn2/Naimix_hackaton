@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Zodiac';
+  src: url('../fonts/Widget-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Zodiac';
+  src: url('../fonts/Widget.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app{
   height: 100svh;
   display: flex;
@@ -126,3 +139,69 @@ section{
   background-position-y: center;
 }
 
+
+.circle {
+  fill: none;
+  stroke: whitesmoke;
+}
+.circle-big {
+  fill: #63117e;
+}
+.circle-small {
+  fill: #353535;
+}
+.piece {
+  stroke: white;
+  transition: fill 150ms ease-out, d 150ms ease-out;
+}
+.piece-text{
+  font-family: 'Zodiac';
+  cursor: pointer;
+  transition: font-size 150ms ease-out;
+  fill: whitesmoke;
+  stroke: whitesmoke;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.circle-spin{
+  fill: none;
+  stroke: #f0def0;
+  stroke-width: 2px;
+  transform-origin: 50% 50%;
+}
+.circle-spin-1{
+  animation: spin 36s linear infinite;
+}
+.circle-spin-2{
+  animation: spin 40s linear infinite reverse;
+}
+.circle-spin-3{
+  animation: spin 44s linear infinite;
+}
+.line{
+  stroke: #f0def0;
+  stroke-width: 1;
+}
+.line-good{
+  stroke: #3bc91f;
+}
+.line-bad{
+  stroke: #c02121;
+}
+.line-dark{
+  stroke: #000000;
+}
+
+.tmp-font{
+  font-family: 'Zodiac';
+}
+
+@keyframes spin{
+  from{
+    rotate: 0deg;
+  }
+  to{
+    rotate: 360deg;
+  }
+}

@@ -12,7 +12,7 @@
         <p class="text-5xl font-medium text-right">или зарегистрируй новый,</p>
         <p class="text-5xl font-medium text-right">если ты впервые</p>
         <p class="text-5xl font-medium text-right">на нашем сайте</p>
-        <div class="py-3 px-6 text-2xl font-bold self-end rounded-2xl my-10 yellow-text bg-slate-50">
+        <div @click="$router.push({name: 'LoginPage'})" class="py-3 px-6 text-2xl font-bold self-end rounded-2xl my-10 yellow-text cursor-pointer bg-slate-50 hover:bg-slate-100 active:bg-slate-200">
           Войти
         </div>
       </div>
